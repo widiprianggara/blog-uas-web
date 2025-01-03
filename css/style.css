@@ -1,0 +1,265 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* CSS Refactor */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E9E5DD;
+}
+
+body{
+    overflow-x: hidden;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+/* CSS Form Regsiter & Login */
+
+.forminput {
+    background-color: #fafafa;
+}
+
+.container {
+    position: relative;
+    max-width: 430px;
+    width: 100%;
+    background: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 0 20px;
+}
+
+.container .forms {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 500px;
+    width: 200%;
+    transition: height 0.2s ease;
+    background-color: #fafafa;
+}
+
+
+.container .form {
+    width: 50%;
+    padding: 30px;
+    background-color: #fafafa;
+    transition: margin-left 0.18s ease;
+}
+
+.container.active .login {
+    margin-left: -50%;
+    opacity: 0;
+    transition: margin-left 0.18s ease, opacity 0.15s ease;
+}
+
+.container .signup {
+    opacity: 0;
+    transition: opacity 0.09s ease;
+}
+
+.container.active .signup {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.container.active .forms {
+    height: 600px;
+}
+
+.container .form .title {
+    position: relative;
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.form .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #E9E5DD;
+    border-radius: 25px;
+}
+
+.form .input-field {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.input-field input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.input-field input:hover {
+    transform: translateY(-3px);
+}
+
+.input-field input:is(:focus, :valid) {
+    border-bottom-color: #F8DDA4;
+}
+
+.input-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field input:is(:focus, :valid)~i {
+    color: #F8DDA4;
+}
+
+.input-field i.icon {
+    left: 0;
+}
+
+.input-field i.showHidePw {
+    right: 0;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.form .checkbox-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.checkbox-text .checkbox-content {
+    display: flex;
+    align-items: center;
+}
+
+.form .text {
+    color: #333;
+    font-size: 14px;
+}
+
+.form a.text {
+    color: #F8DDA4;
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+.form .button {
+    margin-top: 35px;;
+}
+
+.form .button input {
+    border: none;
+    color: #414141;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    background-color: #F8DDA4;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form .button input:hover {
+    background-color: #F8DDA4;
+    transform: translateY(-3px);
+    cursor: pointer;
+}
+
+.form .login-signup {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.endtextlogin {
+    padding-top: 15px;
+    align-items: center;
+    text-decoration: none;
+    display: flex;
+    padding-left: 45px;
+}
+
+/* CSS Khsusus Form Login */
+.container .formslogin {
+    display: flex;
+    align-items: center;
+    height: 500px;
+    width: 200%;
+    transition: height 0.2s ease;;
+}
+
+
+.endtextlogin {
+    text-decoration: none;
+    padding-right: 20px;
+    align-items: center;
+}
+
+/* CSS responsive */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%; /* Reduce container width */
+    }
+
+    .container .form .title {
+        font-size: 1.2rem; /* Adjust title size */
+    }
+
+    .input-field input {
+        font-size: 14px; /* Adjust input font size */
+    }
+
+    .form .button input {
+        font-size: 15px; /* Adjust button font size */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px; /* Reduce padding */
+    }
+
+    .container .form .title {
+        font-size: 1rem; /* Further reduce title size */
+    }
+
+    .input-field input {
+        font-size: 12px; /* Smaller input font size */
+    }
+
+    .form .button input {
+        font-size: 13px; /* Smaller button font size */
+    }
+}
+
+
