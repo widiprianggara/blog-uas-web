@@ -1,6 +1,9 @@
 // Base API URL
 const API_BASE_URL = "https://primdev.alwaysdata.net/api";
 
+// Blog API URL
+const API_BLOG_URL = "https://primdev.alwaysdata.net/api/blog";
+
 // Redirect jika belum login
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
@@ -89,7 +92,7 @@ if (logoutButton) {
 async function getBlogs() {
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`${API_BASE_URL}/blogs`, {
+    const response = await fetch(`${API_BLOG_URL}/blogs`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -137,7 +140,7 @@ if (blogForm) {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blogs`, {
+      const response = await fetch(`${API_BLOG_URL}/blogs`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -167,7 +170,7 @@ async function editBlog(blogId) {
   if (newTitle && newContent) {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}`, {
+      const response = await fetch(`${API_BLOG_URL}/blogs/${blogId}`, {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -193,7 +196,7 @@ async function deleteBlog(blogId) {
   if (confirm("Are you sure you want to delete this blog?")) {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}`, {
+      const response = await fetch(`${API_BLOG_URL}/blogs/${blogId}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`,
