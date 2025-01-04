@@ -10,9 +10,6 @@
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
-
-    <!-- JS for responsive navbar -->
-    <script src="script.js"></script>
   </head>
   <body>
     <nav>
@@ -33,6 +30,9 @@
         </li>
         <li>
           <a href="#write-stories">Write Stories</a>
+        </li>
+        <li>
+          <button id="logout-btn">Logout</button>
         </li>
       </ul>
     </nav>
@@ -67,7 +67,7 @@
       </div>
 
       <!-- Contoh Stories Yang Sudah Diinputkan Melalui Section Membuat Stori-->
-      <div class="blog-container">
+      <div class="blog-container" id="blog-container">
         <!-- Blog 1 -->
         <div class="blog-box">
           <div class="blog-text">
@@ -181,4 +181,7 @@
       </div>
     </footer>
   </body>
+  <!-- JS for responsive navbar -->
+  <script src="js/script.js"></script>
+  <script src="js/api.js"></script>
 </html>
