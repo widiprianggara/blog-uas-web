@@ -18,24 +18,29 @@
             <span class="title">Register to UX Stories</span>
             <form id="register-form">
                 <div class="input-field">
-                    <input class ="forminput" type="text" placeholder="Enter Your Name" required />
+                    <input id="name" class ="forminput" type="text" placeholder="Enter Your Name" required />
                     <i class="uil uil-user"></i>
                   </div>
               <div class="input-field">
-                <input class ="forminput" type="text" placeholder="Enter Your Email" required />
+                <input id="email" class ="forminput" type="email" placeholder="Enter Your Email" required />
                 <i class="uil uil-envelope icon"></i>
               </div>
               <div class="input-field">
-                <input class ="forminput" type="password" class="password" placeholder="Create Your Password" required />
+                <input id="password" class ="forminput" type="password" class="password" placeholder="Create Your Password" required />
                 <i class="uil uil-lock icon"></i>
                 <i class="uil uil-eye-slash showHidePw"></i>
               </div>
               <div class="checkbox-text">
               </div>
               <div class="input-field button">
-                <input type="button" value="Login" />
+                <button type="submit">Register</button>
+                <!-- <input type="button" value="Login" /> -->
               </div>
+              <p class="endtextlogin">Already Have Account? <a href="login.html">Login Now</a></p>
             </form>
-            <p class="endtextlogin">Already Have Account? <a href="login.html">Login Now</a></p>
+          </div>
+        </div>
+    </div>
   </body>
+  <script src="js/api.js"></script>
 </html>

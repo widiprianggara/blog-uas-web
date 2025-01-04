@@ -20,23 +20,25 @@
             <span class="title">Masuk ke Blog</span>
             <form id="login-form">
               <div class="input-field">
-                <input type="text" placeholder="Masukan Alamat Email" required />
+                <input id="email" type="email" placeholder="Masukan Alamat Email" required />
                 <i class="uil uil-envelope icon"></i>
               </div>
               <div class="input-field">
-                <input type="password" class="password" placeholder="Masukan Password" required />
+                <input id="password" type="password" class="password" placeholder="Masukan Password" required />
                 <i class="uil uil-lock icon"></i>
                 <i class="uil uil-eye-slash showHidePw"></i>
               </div>
               <div class="checkbox-text">
               </div>
               <div class="input-field button">
-                <input type="button" value="Login" />
+                <button type="submit">Login</button>
+                <!-- <input type="button" value="Login" /> -->
               </div>
               <p class="endtextlogin">Don't have an account? <a href="register.html">Register</a></p>
             </form>
-
-            <!--Form Register-->
+          </div>
+        </div>
+    </div>
   </body>
-  <script src="api.js"></script>
+  <script src="js/api.js"></script>
 </html>
