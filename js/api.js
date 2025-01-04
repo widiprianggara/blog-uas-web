@@ -1,5 +1,5 @@
 // Base API URL
-const API_BASE_URL = "https://primdev.alwaysdata.net/api/auth";
+const API_BASE_URL = "https://primdev.alwaysdata.net/api";
 
 // Redirect jika belum login
 document.addEventListener("DOMContentLoaded", () => {
