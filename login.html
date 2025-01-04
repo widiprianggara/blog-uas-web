@@ -9,6 +9,7 @@
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
   </head>
   <body>
 
@@ -17,7 +18,7 @@
         <div class="forms">
           <div class="form login">
             <span class="title">Masuk ke Blog</span>
-            <form action="#">
+            <form id="login-form">
               <div class="input-field">
                 <input type="text" placeholder="Masukan Alamat Email" required />
                 <i class="uil uil-envelope icon"></i>
@@ -32,8 +33,10 @@
               <div class="input-field button">
                 <input type="button" value="Login" />
               </div>
+              <p class="endtextlogin">Don't have an account? <a href="register.html">Register</a></p>
             </form>
 
             <!--Form Register-->
   </body>
+  <script src="api.js"></script>
 </html>
