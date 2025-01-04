@@ -1,5 +1,5 @@
 // Base API URL
-const API_BASE_URL = "https://primdev.alwaysdata.net/api";
+const API_BASE_URL = "https://primdev.alwaysdata.net/api/auth";
 
 // Redirect jika belum login
 document.addEventListener("DOMContentLoaded", () => {
@@ -53,12 +53,12 @@ if (registerForm) {
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirm-password").value;
+    // const confirmPassword = document.getElementById("confirm-password").value;
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   alert("Passwords do not match!");
+    //   return;
+    // }
 
     try {
       const response = await fetch(`${API_BASE_URL}/register`, {
