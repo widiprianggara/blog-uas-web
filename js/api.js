@@ -1,12 +1,10 @@
 // Base API URL
 const API_BASE_URL = "https://primdev.alwaysdata.net/api";
-const token = "2|HhnUrmaHAwSNUDf7Pz5IasQo4foBnU2KKr1gQLUW";
-// Blog API URL
-const API_BLOG_URL = "https://primdev.alwaysdata.net/api/blog";
+// const token = "491|m1fQYlf1lGVo2RyNMTq17o6SxQif6K7y6IrsefVf";
 
 // Redirect jika belum login
 document.addEventListener("DOMContentLoaded", () => {
-  //   const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   if (window.location.pathname.includes("index.html") && !token) {
     alert("Please log in first!");
@@ -56,12 +54,23 @@ if (registerForm) {
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
 
     try {
       const response = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          confirm_password: password,
+        }),
       });
 
       const data = await response.json();
