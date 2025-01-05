@@ -1,5 +1,6 @@
 // Base API URL
 const API_BASE_URL = "https://primdev.alwaysdata.net/api";
+// const token = "491|m1fQYlf1lGVo2RyNMTq17o6SxQif6K7y6IrsefVf";
 
 // Redirect jika belum login
 document.addEventListener("DOMContentLoaded", () => {
