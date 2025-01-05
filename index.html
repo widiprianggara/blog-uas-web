@@ -142,20 +142,20 @@
         <div class="write-stories-container">
           <div class="headline stories">
             <h3>Tell Another People Your Awesome Stories</h3>
-            <p>Always tell your stories inspire another people</p>
+            <p>Always tell your stories to inspire another people</p>
           </div>
-
-          <div class="upload-image-heading">
-            <h4>Add Image to Your Stories</h4>
-          </div>
-
-          <div class="upload-image">
-            <form
-              class="choose-file"
-              action="/upload"
-              method="post"
-              enctype="multipart/form-data"
-            >
+        
+          <form
+            action="/upload"
+            method="post"
+            enctype="multipart/form-data"
+            class="story-form"
+          >
+            <div class="upload-image-heading">
+              <h4>Add Image to Your Stories</h4>
+            </div>
+        
+            <div class="upload-image">
               <input
                 type="file"
                 class="image-select"
@@ -163,30 +163,28 @@
                 name="image"
                 accept="image/*"
               />
-
-              <!-- <button class="btn-upload-image">Upload</button> -->
-            </form>
-          </div>
-
-          <form action="#">
+            </div>
+        
             <input
               type="text"
               name="title"
               id="title"
               placeholder="Write Your Story Headline"
+              class="story-title"
             />
-
+        
             <div class="input-box">
               <textarea
                 name="stories"
-                class="stories"
+                id="story-content"
+                class="story-content"
                 placeholder="Write Your Stories Here"
               ></textarea>
             </div>
-
-            <button class="submit-stories">Send You Stories</button>
+        
+            <button type="submit" class="submit-stories">Send Your Stories</button>
           </form>
-        </div>
+        </div>        
       </div>
     </main>
 
