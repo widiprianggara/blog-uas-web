@@ -98,6 +98,50 @@ nav {
     }
   }
 
+    /* icon user > logout */
+    .user-icon {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .user-icon i {
+      font-size: 25px;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    .dropdown button {
+      border: none;
+      background: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: #414141;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: 600;
+    }
+
+    .dropdown button:hover {
+      background-color: #f8dda4;
+      color: #414141;
+      transform: translateY(-3px);
+      font-weight: 600;
+    }
+
+    .dropdown.active {
+      display: block; /* Ditampilkan saat diaktifkan */
+    }
+
   /* Hero Section */
   .profile {
     width: 600px;
@@ -508,6 +552,88 @@ textarea {
   background-color: #ffffff;
   box-sizing: border-box;
   resize: none;
+}
+
+/* CSS upload image */
+.upload-image {
+  margin: 15px auto;
+  padding: 5px;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  max-width: 950px;
+  box-sizing: border-box;
+}
+
+
+/* styling button upload image */
+.btn-upload-image {
+  background-color: #f8dda4;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #414141;
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  margin-top: 10px;
+  float: right;
+  margin-right: 10px;
+}
+
+
+
+.upload-image :hover{
+  transform: translateY(-3px);
+  color: #414141;
+}
+
+/* css btn choose image */
+.image-select {
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+/* responsive CSS upload image */
+@media (max-width: 768px) {
+  .upload-image {
+    flex-direction: column; /* Tata letak vertikal */
+    align-items: stretch; /* Elemen memenuhi lebar penuh */
+    padding: 20px;
+  }
+
+  .image-select {
+    margin-bottom: 10px; /* Tambahkan jarak bawah */
+    margin-right: 0;
+  }
+
+  .btn-upload-image {
+    width: 100%; /* Tombol memenuhi lebar penuh */
+  }
+}
+
+/* Responsif untuk layar sangat kecil */
+@media (max-width: 480px) {
+  .upload-image {
+    padding: 15px;
+    border-radius: 6px;
+  }
+
+  .image-select {
+    font-size: 12px; /* Ukuran teks lebih kecil */
+  }
+
+  .btn-upload-image {
+    font-size: 14px; /* Ukuran teks lebih kecil */
+    padding: 8px 15px;
+  }
 }
 
 /* Button Styling For Submit Stories */
