@@ -94,11 +94,11 @@ if (logoutButton) {
 // Fetch and Display Blogs
 async function getBlogs() {
   try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${API_BASE_URL}/blogs`, {
+    // const token = localStorage.getItem("token");
+    const response = await fetch(`${API_BASE_URL}/blog`, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -113,12 +113,18 @@ async function getBlogs() {
             (blog) => `
           <div class="blog-box">
             <div class="blog-text">
-              <span>${new Date(blog.date).toLocaleDateString()} / ${blog.category}</span>
+              <span>${new Date(blog.date).toLocaleDateString()} / ${
+              blog.category
+            }</span>
               <a href="#" class="blog-title">${blog.title}</a>
               <p>${blog.content}</p>
               <div class="btn-blog">
-                <button class="edit" onclick="editBlog('${blog.id}')">Edit</button>
-                <button class="delete" onclick="deleteBlog('${blog.id}')">Delete</button>
+                <button class="edit" onclick="editBlog('${
+                  blog.id
+                }')">Edit</button>
+                <button class="delete" onclick="deleteBlog('${
+                  blog.id
+                }')">Delete</button>
               </div>
             </div>
           </div>`
@@ -142,11 +148,11 @@ if (blogForm) {
     const content = document.querySelector("textarea[name='stories']").value;
 
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blogs`, {
+      //   const token = localStorage.getItem("token");
+      const response = await fetch(`${API_BASE_URL}/blog`, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ title, content }),
@@ -172,11 +178,11 @@ async function editBlog(blogId) {
 
   if (newTitle && newContent) {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}`, {
+      //   const token = localStorage.getItem("token");
+      const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
         method: "PUT",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ title: newTitle, content: newContent }),
@@ -198,11 +204,11 @@ async function editBlog(blogId) {
 async function deleteBlog(blogId) {
   if (confirm("Are you sure you want to delete this blog?")) {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}`, {
+      //   const token = localStorage.getItem("token");
+      const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
         method: "DELETE",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
