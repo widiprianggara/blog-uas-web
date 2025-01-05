@@ -138,10 +138,10 @@ async function getBlogs() {
           .join("");
       }
     } else {
-      alert("Failed to fetch blogs.");
+      alert("Failed to fetch blog.");
     }
   } catch (error) {
-    console.error("Error fetching blogs:", error);
+    console.error("Error fetching blog:", error);
   }
 }
 

@@ -9,33 +9,62 @@
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
   </head>
   <body>
     <div class="container">
-        <div class="forms">
-          <div class="form login">
-            <span class="title">Register to UX Stories</span>
-            <form action="#">
-                <div class="input-field">
-                    <input class ="forminput" type="text" placeholder="Enter Your Name" required />
-                    <i class="uil uil-user"></i>
-                  </div>
-              <div class="input-field">
-                <input class ="forminput" type="text" placeholder="Enter Your Email" required />
-                <i class="uil uil-envelope icon"></i>
-              </div>
-              <div class="input-field">
-                <input class ="forminput" type="password" class="password" placeholder="Create Your Password" required />
-                <i class="uil uil-lock icon"></i>
-                <i class="uil uil-eye-slash showHidePw"></i>
-              </div>
-              <div class="checkbox-text">
-              </div>
-              <div class="input-field button">
-                <input type="button" value="Login" />
-              </div>
-            </form>
-            <p class="endtextlogin">Already Have Account? <a href="login.html">Login Now</a></p>
+      <div class="forms">
+        <div class="form register">
+          <span class="title">Register to UX Stories</span>
+          <form id="register-form">
+            <div class="input-field">
+              <input
+                id="name"
+                type="text"
+                placeholder="Enter Your Name"
+                required
+              />
+              <i class="uil uil-user icon"></i>
+            </div>
+            <div class="input-field">
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter Your Email"
+                required
+              />
+              <i class="uil uil-envelope icon"></i>
+            </div>
+            <div class="input-field">
+              <input
+                id="password"
+                type="password"
+                placeholder="Create Your Password"
+                required
+              />
+              <i class="uil uil-lock icon"></i>
+              <i class="uil uil-eye-slash showHidePw"></i>
+            </div>
+            <div class="input-field">
+              <input
+                id="confirm-password"
+                type="password"
+                placeholder="Confirm Your Password"
+                required
+              />
+              <i class="uil uil-lock icon"></i>
+              <i class="uil uil-eye-slash showHidePw"></i>
+            </div>
+            <div class="input-field button">
+              <input type="submit" value="Register" />
+            </div>
+            <p class="endtextlogin">
+              Already have an account? <a href="login.html">Login Now</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="js/api.js"></script>
   </body>
 </html>
