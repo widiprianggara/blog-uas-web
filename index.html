@@ -32,7 +32,16 @@
           <a href="#write-stories">Write Stories</a>
         </li>
         <li>
+<<<<<<< HEAD
           <button id="logout-btn">Logout</button>
+=======
+          <div id="user-icon" class="user-icon">
+            <i class="uil uil-user"></i>
+            <div id="dropdown-menu" class="dropdown hidden">
+              <button id="logout-btn">Logout</button>
+            </div>
+          </div>
+>>>>>>> 48572c02cc950bff6cab2aa030aecea8255aa242
         </li>
       </ul>
     </nav>
@@ -66,14 +75,14 @@
     </header>
 
     <main>
-      <div class="main-title" id="latest-stories">
+      <!-- <div class="main-title" id="latest-stories">
         <h2>Latest Stories</h2>
-      </div>
+      </div> -->
 
       <!-- Contoh Stories Yang Sudah Diinputkan Melalui Section Membuat Stori-->
-      <div id="blog-container" class="blog-container">
-        <!-- Blog 1 -->
-        <div class="blog-box">
+      <!-- <div class="blog-container" id="blog-container"> -->
+      <!-- Blog 1 -->
+      <!-- <div class="blog-box">
           <div class="blog-text">
             <span>20 November 2024 / User Persona</span>
             <a href="#" class="blog-title"> How to Create User Persona</a>
@@ -123,11 +132,11 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Membuat Stroies Baru -->
 
-      <div class="writeStories-mainContainer" id="write-stories">
+      <div class="writeStories-mainContainer" id="story-form">
         <div class="write-stories-title">
           <h2>Write Your Awesome Stories Here</h2>
         </div>
@@ -135,28 +144,66 @@
         <div class="write-stories-container">
           <div class="headline stories">
             <h3>Tell Another People Your Awesome Stories</h3>
-            <p>Always tell your stories inspire another people</p>
+            <p>Always tell your stories to inspire another people</p>
           </div>
 
-          <form action="#">
+          <form
+            action="/upload"
+            method="post"
+            enctype="multipart/form-data"
+            class="story-form"
+          >
+            <div class="upload-image-heading">
+              <h4>Add an Image to Your Story</h4>
+            </div>
+
+            <div class="upload-image">
+              <input
+                type="file"
+                class="image-select"
+                id="image"
+                name="image"
+                accept="image/*"
+              />
+            </div>
+
             <input
               type="text"
               name="title"
               id="title"
               placeholder="Write Your Story Headline"
+              class="story-title"
+            />
+            <input
+              type="text"
+              name="slug"
+              id="slug"
+              placeholder="Slug"
+              class="story-title"
             />
 
             <div class="input-box">
               <textarea
-                name="stories"
-                class="stories"
-                placeholder="Write Your Stories Here"
+                name="content"
+                id="content"
+                class="story-content"
+                placeholder="Write Your Story Here"
               ></textarea>
             </div>
 
-            <button class="submit-stories">Send You Stories</button>
+            <button type="submit" class="submit-stories" id="submit-story">
+              Send Your Story
+            </button>
           </form>
         </div>
+      </div>
+
+      <div class="main-title" id="latest-stories">
+        <h2>Latest Stories</h2>
+      </div>
+
+      <div class="table-container">
+        <table id="BlogList" class="styled-table"></table>
       </div>
     </main>
 
