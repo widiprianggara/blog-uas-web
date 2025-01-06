@@ -1,6 +1,5 @@
 // Base API URL
 const API_BASE_URL = "https://primdev.alwaysdata.net/api";
-// const token = "491|m1fQYlf1lGVo2RyNMTq17o6SxQif6K7y6IrsefVf";
 
 // Redirect jika belum login
 document.addEventListener("DOMContentLoaded", () => {
@@ -92,139 +91,139 @@ if (logoutButton) {
   });
 }
 
-// Fetch and Display Blogs
-async function getBlogs() {
-  try {
-    // const token = localStorage.getItem("token");
-    const response = await fetch(`${API_BASE_URL}/blog`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+// // Fetch and Display Blogs
+// async function getBlogs() {
+//   try {
+//     // const token = localStorage.getItem("token");
+//     const response = await fetch(`${API_BASE_URL}/blog`, {
+//       method: "GET",
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "application/json",
+//       },
+//     });
 
-    if (response.ok) {
-      const blogs = await response.json();
-      const blogContainer = document.getElementById("blog-container");
+//     if (response.ok) {
+//       const blogs = await response.json();
+//       const blogContainer = document.getElementById("blog-container");
 
-      if (blogContainer) {
-        blogContainer.innerHTML = blogs
-          .map(
-            (blog) => `
-          <div class="blog-box">
-            <div class="blog-text">
-              <span>${new Date(blog.date).toLocaleDateString()} / ${
-              blog.category
-            }</span>
-              <a href="#" class="blog-title">${blog.title}</a>
-              <p>${blog.content}</p>
-              <div class="btn-blog">
-                <button class="edit" onclick="editBlog('${
-                  blog.id
-                }')">Edit</button>
-                <button class="delete" onclick="deleteBlog('${
-                  blog.id
-                }')">Delete</button>
-              </div>
-            </div>
-          </div>`
-          )
-          .join("");
-      }
-    } else {
-      alert("Failed to fetch blogs.");
-    }
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
-  }
-}
+//       if (blogContainer) {
+//         blogContainer.innerHTML = blogs
+//           .map(
+//             (blog) => `
+//           <div class="blog-box">
+//             <div class="blog-text">
+//               <span>${new Date(blog.date).toLocaleDateString()} / ${
+//               blog.category
+//             }</span>
+//               <a href="#" class="blog-title">${blog.title}</a>
+//               <p>${blog.content}</p>
+//               <div class="btn-blog">
+//                 <button class="edit" onclick="editBlog('${
+//                   blog.id
+//                 }')">Edit</button>
+//                 <button class="delete" onclick="deleteBlog('${
+//                   blog.id
+//                 }')">Delete</button>
+//               </div>
+//             </div>
+//           </div>`
+//           )
+//           .join("");
+//       }
+//     } else {
+//       alert("Failed to fetch blogs.");
+//     }
+//   } catch (error) {
+//     console.error("Error fetching blogs:", error);
+//   }
+// }
 
-// Create Blog
-const blogForm = document.querySelector("#write-stories form");
-if (blogForm) {
-  blogForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const title = document.getElementById("title").value;
-    const content = document.querySelector("textarea[name='stories']").value;
+// // Create Blog
+// const blogForm = document.querySelector("#write-stories form");
+// if (blogForm) {
+//   blogForm.addEventListener("submit", async (e) => {
+//     e.preventDefault();
+//     const title = document.getElementById("title").value;
+//     const content = document.querySelector("textarea[name='stories']").value;
 
-    try {
-      //   const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blog`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title, content }),
-      });
+//     try {
+//       //   const token = localStorage.getItem("token");
+//       const response = await fetch(`${API_BASE_URL}/blog`, {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ title, content }),
+//       });
 
-      if (response.ok) {
-        alert("Blog created successfully!");
-        getBlogs();
-        blogForm.reset();
-      } else {
-        alert("Failed to create blog.");
-      }
-    } catch (error) {
-      console.error("Error creating blog:", error);
-    }
-  });
-}
+//       if (response.ok) {
+//         alert("Blog created successfully!");
+//         getBlogs();
+//         blogForm.reset();
+//       } else {
+//         alert("Failed to create blog.");
+//       }
+//     } catch (error) {
+//       console.error("Error creating blog:", error);
+//     }
+//   });
+// }
 
-// Update Blog
-async function editBlog(blogId) {
-  const newTitle = prompt("Enter new title:");
-  const newContent = prompt("Enter new content:");
+// // Update Blog
+// async function editBlog(blogId) {
+//   const newTitle = prompt("Enter new title:");
+//   const newContent = prompt("Enter new content:");
 
-  if (newTitle && newContent) {
-    try {
-      //   const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title: newTitle, content: newContent }),
-      });
+//   if (newTitle && newContent) {
+//     try {
+//       //   const token = localStorage.getItem("token");
+//       const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
+//         method: "PUT",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ title: newTitle, content: newContent }),
+//       });
 
-      if (response.ok) {
-        alert("Blog updated successfully!");
-        getBlogs();
-      } else {
-        alert("Failed to update blog.");
-      }
-    } catch (error) {
-      console.error("Error updating blog:", error);
-    }
-  }
-}
+//       if (response.ok) {
+//         alert("Blog updated successfully!");
+//         getBlogs();
+//       } else {
+//         alert("Failed to update blog.");
+//       }
+//     } catch (error) {
+//       console.error("Error updating blog:", error);
+//     }
+//   }
+// }
 
-// Delete Blog
-async function deleteBlog(blogId) {
-  if (confirm("Are you sure you want to delete this blog?")) {
-    try {
-      //   const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+// // Delete Blog
+// async function deleteBlog(blogId) {
+//   if (confirm("Are you sure you want to delete this blog?")) {
+//     try {
+//       //   const token = localStorage.getItem("token");
+//       const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
+//         method: "DELETE",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//       });
 
-      if (response.ok) {
-        alert("Blog deleted successfully!");
-        getBlogs();
-      } else {
-        alert("Failed to delete blog.");
-      }
-    } catch (error) {
-      console.error("Error deleting blog:", error);
-    }
-  }
-}
+//       if (response.ok) {
+//         alert("Blog deleted successfully!");
+//         getBlogs();
+//       } else {
+//         alert("Failed to delete blog.");
+//       }
+//     } catch (error) {
+//       console.error("Error deleting blog:", error);
+//     }
+//   }
+// }
 
 // CRUD for Blog Posts
 
@@ -268,8 +267,10 @@ async function getBlogs() {
   }
 }
 
-// Create a new blog post
+// Create or Update a blog post
 const storyForm = document.getElementById("story-form");
+let isEditing = false; // Flag to check if we're editing
+
 if (storyForm) {
   storyForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -279,16 +280,23 @@ if (storyForm) {
     const content = document.getElementById("content").value;
     const image = document.getElementById("image").files[0];
 
+    if (!title || !slug || !content) {
+      alert("All fields are required!");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("slug", slug);
     formData.append("content", content);
     formData.append("image", image);
-    formData.append("author_id", localStorage.getItem("user_id")); // Assuming user_id is stored in localStorage
+
+    const method = isEditing ? "PUT" : "POST";
+    const url = isEditing ? `${API_BASE_URL}/blog/${storyForm.dataset.blogId}` : `${API_BASE_URL}/blog`;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/blog`, {
-        method: "POST",
+      const response = await fetch(url, {
+        method: method,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -297,15 +305,17 @@ if (storyForm) {
 
       const data = await response.json();
       if (response.ok) {
-        alert("Blog created successfully!");
+        alert(isEditing ? "Blog updated successfully!" : "Blog created successfully!");
         getBlogs();
         storyForm.reset();
+        isEditing = false; // Reset the editing flag
+        storyForm.dataset.blogId = ""; // Clear dataset
       } else {
-        alert(data.message || "Failed to create blog");
+        alert(data.message || "Failed to process blog");
       }
     } catch (error) {
-      console.error("Error creating blog:", error);
-      alert("Error creating blog. Please try again.");
+      console.error("Error processing blog:", error);
+      alert("Error processing blog. Please try again.");
     }
   });
 }
@@ -315,48 +325,12 @@ function editBlog(id, title, slug, content, image) {
   document.getElementById("title").value = title;
   document.getElementById("slug").value = slug;
   document.getElementById("content").value = content;
-  document.getElementById("image").value = image;
+  // Note: Images cannot be pre-filled, only displayed if needed
   document.getElementById("submit-story").innerText = "Update Story";
-
-  // Change submit button behavior
-  storyForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const updatedTitle = document.getElementById("title").value;
-    const updatedSlug = document.getElementById("slug").value;
-    const updatedContent = document.getElementById("content").value;
-    const updatedImage = document.getElementById("image").files[0];
-
-    const updatedBlog = {
-      title: updatedTitle,
-      slug: updatedSlug,
-      content: updatedContent,
-      image: updatedImage,
-    };
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/blog/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(updatedBlog),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        alert("Blog updated successfully!");
-        getBlogs();
-        storyForm.reset();
-      } else {
-        alert(data.message || "Failed to update blog");
-      }
-    } catch (error) {
-      console.error("Error updating blog:", error);
-      alert("Error updating blog. Please try again.");
-    }
-  });
+  
+  // Set editing flag and store blog id
+  isEditing = true;
+  storyForm.dataset.blogId = id;
 }
 
 // Delete blog post
