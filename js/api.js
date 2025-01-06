@@ -1,6 +1,5 @@
 // Base API URL
 const API_BASE_URL = "https://primdev.alwaysdata.net/api";
-// const token = "491|m1fQYlf1lGVo2RyNMTq17o6SxQif6K7y6IrsefVf";
 
 // Redirect jika belum login
 document.addEventListener("DOMContentLoaded", () => {
@@ -92,136 +91,267 @@ if (logoutButton) {
   });
 }
 
-// Fetch and Display Blogs
+// // Fetch and Display Blogs
+// async function getBlogs() {
+//   try {
+//     // const token = localStorage.getItem("token");
+//     const response = await fetch(`${API_BASE_URL}/blog`, {
+//       method: "GET",
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "application/json",
+//       },
+//     });
+
+//     if (response.ok) {
+//       const blogs = await response.json();
+//       const blogContainer = document.getElementById("blog-container");
+
+//       if (blogContainer) {
+//         blogContainer.innerHTML = blogs
+//           .map(
+//             (blog) => `
+//           <div class="blog-box">
+//             <div class="blog-text">
+//               <span>${new Date(blog.date).toLocaleDateString()} / ${
+//               blog.category
+//             }</span>
+//               <a href="#" class="blog-title">${blog.title}</a>
+//               <p>${blog.content}</p>
+//               <div class="btn-blog">
+//                 <button class="edit" onclick="editBlog('${
+//                   blog.id
+//                 }')">Edit</button>
+//                 <button class="delete" onclick="deleteBlog('${
+//                   blog.id
+//                 }')">Delete</button>
+//               </div>
+//             </div>
+//           </div>`
+//           )
+//           .join("");
+//       }
+//     } else {
+//       alert("Failed to fetch blogs.");
+//     }
+//   } catch (error) {
+//     console.error("Error fetching blogs:", error);
+//   }
+// }
+
+// // Create Blog
+// const blogForm = document.querySelector("#write-stories form");
+// if (blogForm) {
+//   blogForm.addEventListener("submit", async (e) => {
+//     e.preventDefault();
+//     const title = document.getElementById("title").value;
+//     const content = document.querySelector("textarea[name='stories']").value;
+
+//     try {
+//       //   const token = localStorage.getItem("token");
+//       const response = await fetch(`${API_BASE_URL}/blog`, {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ title, content }),
+//       });
+
+//       if (response.ok) {
+//         alert("Blog created successfully!");
+//         getBlogs();
+//         blogForm.reset();
+//       } else {
+//         alert("Failed to create blog.");
+//       }
+//     } catch (error) {
+//       console.error("Error creating blog:", error);
+//     }
+//   });
+// }
+
+// // Update Blog
+// async function editBlog(blogId) {
+//   const newTitle = prompt("Enter new title:");
+//   const newContent = prompt("Enter new content:");
+
+//   if (newTitle && newContent) {
+//     try {
+//       //   const token = localStorage.getItem("token");
+//       const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
+//         method: "PUT",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ title: newTitle, content: newContent }),
+//       });
+
+//       if (response.ok) {
+//         alert("Blog updated successfully!");
+//         getBlogs();
+//       } else {
+//         alert("Failed to update blog.");
+//       }
+//     } catch (error) {
+//       console.error("Error updating blog:", error);
+//     }
+//   }
+// }
+
+// // Delete Blog
+// async function deleteBlog(blogId) {
+//   if (confirm("Are you sure you want to delete this blog?")) {
+//     try {
+//       //   const token = localStorage.getItem("token");
+//       const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
+//         method: "DELETE",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//       });
+
+//       if (response.ok) {
+//         alert("Blog deleted successfully!");
+//         getBlogs();
+//       } else {
+//         alert("Failed to delete blog.");
+//       }
+//     } catch (error) {
+//       console.error("Error deleting blog:", error);
+//     }
+//   }
+// }
+
+// CRUD for Blog Posts
+
+// Fetch blog posts and display them in a table
 async function getBlogs() {
   try {
-    // const token = localStorage.getItem("token");
-    const response = await fetch(`${API_BASE_URL}/blog`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+    const response = await fetch(`${API_BASE_URL}/blog`);
+    const blogs = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Error fetching blogs: ${response.status}`);
+    }
+
+    let table = `
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Slug</th>
+        <th>Content</th>
+        <th>Action</th>
+      </tr>`;
+
+    blogs.forEach((blog) => {
+      table += `
+        <tr>
+          <td>${blog.id}</td>
+          <td>${blog.title}</td>
+          <td>${blog.slug}</td>
+          <td>${blog.content}</td>
+          <td class="btn-blog">
+            <button class="edit" onclick="editBlog(${blog.id}, '${blog.title}', '${blog.slug}', '${blog.content}', '${blog.image}')">Edit</button>
+            <button class="delete" onclick="deleteBlog(${blog.id})">Delete</button>
+          </td>
+        </tr>`;
     });
 
-    if (response.ok) {
-      const blogs = await response.json();
-      const blogContainer = document.getElementById("blog-container");
-
-      if (blogContainer) {
-        blogContainer.innerHTML = blogs
-          .map(
-            (blog) => `
-          <div class="blog-box">
-            <div class="blog-text">
-              <span>${new Date(blog.date).toLocaleDateString()} / ${
-              blog.category
-            }</span>
-              <a href="#" class="blog-title">${blog.title}</a>
-              <p>${blog.content}</p>
-              <div class="btn-blog">
-                <button class="edit" onclick="editBlog('${
-                  blog.id
-                }')">Edit</button>
-                <button class="delete" onclick="deleteBlog('${
-                  blog.id
-                }')">Delete</button>
-              </div>
-            </div>
-          </div>`
-          )
-          .join("");
-      }
-    } else {
-      alert("Failed to fetch blogs.");
-    }
+    document.getElementById("BlogList").innerHTML = table;
   } catch (error) {
     console.error("Error fetching blogs:", error);
+    alert(`Error: ${error.message}`);
   }
 }
 
-// Create Blog
-const blogForm = document.querySelector("#write-stories form");
-if (blogForm) {
-  blogForm.addEventListener("submit", async (e) => {
+// Create or Update a blog post
+const storyForm = document.getElementById("story-form");
+let isEditing = false; // Flag to check if we're editing
+
+if (storyForm) {
+  storyForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const title = document.getElementById("title").value;
-    const content = document.querySelector("textarea[name='stories']").value;
+    const slug = document.getElementById("slug").value;
+    const content = document.getElementById("content").value;
+    const image = document.getElementById("image").files[0];
+
+    if (!title || !slug || !content) {
+      alert("All fields are required!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("slug", slug);
+    formData.append("content", content);
+    formData.append("image", image);
+
+    const method = isEditing ? "PUT" : "POST";
+    const url = isEditing ? `${API_BASE_URL}/blog/${storyForm.dataset.blogId}` : `${API_BASE_URL}/blog`;
 
     try {
-      //   const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blog`, {
-        method: "POST",
+      const response = await fetch(url, {
+        method: method,
         headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ title, content }),
+        body: formData,
       });
 
+      const data = await response.json();
       if (response.ok) {
-        alert("Blog created successfully!");
+        alert(isEditing ? "Blog updated successfully!" : "Blog created successfully!");
         getBlogs();
-        blogForm.reset();
+        storyForm.reset();
+        isEditing = false; // Reset the editing flag
+        storyForm.dataset.blogId = ""; // Clear dataset
       } else {
-        alert("Failed to create blog.");
+        alert(data.message || "Failed to process blog");
       }
     } catch (error) {
-      console.error("Error creating blog:", error);
+      console.error("Error processing blog:", error);
+      alert("Error processing blog. Please try again.");
     }
   });
 }
 
-// Update Blog
-async function editBlog(blogId) {
-  const newTitle = prompt("Enter new title:");
-  const newContent = prompt("Enter new content:");
-
-  if (newTitle && newContent) {
-    try {
-      //   const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title: newTitle, content: newContent }),
-      });
-
-      if (response.ok) {
-        alert("Blog updated successfully!");
-        getBlogs();
-      } else {
-        alert("Failed to update blog.");
-      }
-    } catch (error) {
-      console.error("Error updating blog:", error);
-    }
-  }
+// Edit blog post
+function editBlog(id, title, slug, content, image) {
+  document.getElementById("title").value = title;
+  document.getElementById("slug").value = slug;
+  document.getElementById("content").value = content;
+  // Note: Images cannot be pre-filled, only displayed if needed
+  document.getElementById("submit-story").innerText = "Update Story";
+  
+  // Set editing flag and store blog id
+  isEditing = true;
+  storyForm.dataset.blogId = id;
 }
 
-// Delete Blog
-async function deleteBlog(blogId) {
-  if (confirm("Are you sure you want to delete this blog?")) {
-    try {
-      //   const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+// Delete blog post
+async function deleteBlog(id) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/blog/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
 
-      if (response.ok) {
-        alert("Blog deleted successfully!");
-        getBlogs();
-      } else {
-        alert("Failed to delete blog.");
-      }
-    } catch (error) {
-      console.error("Error deleting blog:", error);
+    const data = await response.json();
+    if (response.ok) {
+      alert("Blog deleted successfully!");
+      getBlogs();
+    } else {
+      alert(data.message || "Failed to delete blog");
     }
+  } catch (error) {
+    console.error("Error deleting blog:", error);
+    alert("Error deleting blog. Please try again.");
   }
 }
