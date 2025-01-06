@@ -91,140 +91,6 @@ if (logoutButton) {
   });
 }
 
-// // Fetch and Display Blogs
-// async function getBlogs() {
-//   try {
-//     // const token = localStorage.getItem("token");
-//     const response = await fetch(`${API_BASE_URL}/blog`, {
-//       method: "GET",
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         "Content-Type": "application/json",
-//       },
-//     });
-
-//     if (response.ok) {
-//       const blogs = await response.json();
-//       const blogContainer = document.getElementById("blog-container");
-
-//       if (blogContainer) {
-//         blogContainer.innerHTML = blogs
-//           .map(
-//             (blog) => `
-//           <div class="blog-box">
-//             <div class="blog-text">
-//               <span>${new Date(blog.date).toLocaleDateString()} / ${
-//               blog.category
-//             }</span>
-//               <a href="#" class="blog-title">${blog.title}</a>
-//               <p>${blog.content}</p>
-//               <div class="btn-blog">
-//                 <button class="edit" onclick="editBlog('${
-//                   blog.id
-//                 }')">Edit</button>
-//                 <button class="delete" onclick="deleteBlog('${
-//                   blog.id
-//                 }')">Delete</button>
-//               </div>
-//             </div>
-//           </div>`
-//           )
-//           .join("");
-//       }
-//     } else {
-//       alert("Failed to fetch blogs.");
-//     }
-//   } catch (error) {
-//     console.error("Error fetching blogs:", error);
-//   }
-// }
-
-// // Create Blog
-// const blogForm = document.querySelector("#write-stories form");
-// if (blogForm) {
-//   blogForm.addEventListener("submit", async (e) => {
-//     e.preventDefault();
-//     const title = document.getElementById("title").value;
-//     const content = document.querySelector("textarea[name='stories']").value;
-
-//     try {
-//       //   const token = localStorage.getItem("token");
-//       const response = await fetch(`${API_BASE_URL}/blog`, {
-//         method: "POST",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ title, content }),
-//       });
-
-//       if (response.ok) {
-//         alert("Blog created successfully!");
-//         getBlogs();
-//         blogForm.reset();
-//       } else {
-//         alert("Failed to create blog.");
-//       }
-//     } catch (error) {
-//       console.error("Error creating blog:", error);
-//     }
-//   });
-// }
-
-// // Update Blog
-// async function editBlog(blogId) {
-//   const newTitle = prompt("Enter new title:");
-//   const newContent = prompt("Enter new content:");
-
-//   if (newTitle && newContent) {
-//     try {
-//       //   const token = localStorage.getItem("token");
-//       const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
-//         method: "PUT",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ title: newTitle, content: newContent }),
-//       });
-
-//       if (response.ok) {
-//         alert("Blog updated successfully!");
-//         getBlogs();
-//       } else {
-//         alert("Failed to update blog.");
-//       }
-//     } catch (error) {
-//       console.error("Error updating blog:", error);
-//     }
-//   }
-// }
-
-// // Delete Blog
-// async function deleteBlog(blogId) {
-//   if (confirm("Are you sure you want to delete this blog?")) {
-//     try {
-//       //   const token = localStorage.getItem("token");
-//       const response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
-//         method: "DELETE",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           "Content-Type": "application/json",
-//         },
-//       });
-
-//       if (response.ok) {
-//         alert("Blog deleted successfully!");
-//         getBlogs();
-//       } else {
-//         alert("Failed to delete blog.");
-//       }
-//     } catch (error) {
-//       console.error("Error deleting blog:", error);
-//     }
-//   }
-// }
-
 // CRUD for Blog Posts
 
 // Fetch blog posts and display them in a table
@@ -237,9 +103,15 @@ async function getBlogs() {
       throw new Error(`Error fetching blogs: ${response.status}`);
     }
 
+    if (blogs.length === 0) {
+      document.getElementById("BlogList").innerHTML = "<tr><td colspan='6'>No blogs available</td></tr>";
+      return;
+    }
+
     let table = `
       <tr>
         <th>ID</th>
+        <th>Image</th>
         <th>Title</th>
         <th>Slug</th>
         <th>Content</th>
@@ -250,6 +122,7 @@ async function getBlogs() {
       table += `
         <tr>
           <td>${blog.id}</td>
+          <td><img src="${blog.image}" alt="Blog Image" style="width: 50px; height: auto;"></td>
           <td>${blog.title}</td>
           <td>${blog.slug}</td>
           <td>${blog.content}</td>
@@ -278,7 +151,7 @@ if (storyForm) {
     const title = document.getElementById("title").value;
     const slug = document.getElementById("slug").value;
     const content = document.getElementById("content").value;
-    const image = document.getElementById("image").files[0];
+    const image = document.getElementById("image").files[0]; // Get the selected image file
 
     if (!title || !slug || !content) {
       alert("All fields are required!");
@@ -289,7 +162,9 @@ if (storyForm) {
     formData.append("title", title);
     formData.append("slug", slug);
     formData.append("content", content);
-    formData.append("image", image);
+    if (image) {
+      formData.append("image", image); // Append the image file to the form data
+    }
 
     const method = isEditing ? "PUT" : "POST";
     const url = isEditing ? `${API_BASE_URL}/blog/${storyForm.dataset.blogId}` : `${API_BASE_URL}/blog`;
@@ -320,15 +195,35 @@ if (storyForm) {
   });
 }
 
+// Fungsi untuk menampilkan pratinjau gambar yang diupload
+function previewImage(event) {
+  const file = event.target.files[0];  // Mengambil file dari input file
+  const reader = new FileReader();  // Membaca file
+
+  reader.onload = function () {
+    const preview = document.getElementById("image-preview");  // Mengambil elemen pratinjau
+    preview.src = reader.result;  // Set src gambar dengan hasil pembacaan file
+    preview.style.display = "block";  // Menampilkan gambar pratinjau
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);  // Membaca file yang diupload sebagai data URL
+  }
+}
+
 // Edit blog post
 function editBlog(id, title, slug, content, image) {
   document.getElementById("title").value = title;
   document.getElementById("slug").value = slug;
   document.getElementById("content").value = content;
-  // Note: Images cannot be pre-filled, only displayed if needed
   document.getElementById("submit-story").innerText = "Update Story";
-  
-  // Set editing flag and store blog id
+
+  // Menampilkan pratinjau gambar
+  const previewImage = document.getElementById("image-preview");
+  previewImage.src = image;  // Menetapkan gambar dari URL yang ada
+  previewImage.style.display = "block";  // Menampilkan pratinjau gambar
+
+  // Set editing flag dan store blog id
   isEditing = true;
   storyForm.dataset.blogId = id;
 }
