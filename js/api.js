@@ -255,7 +255,7 @@ async function getBlogs() {
           <td>${blog.slug}</td>
           <td>${blog.content}</td>
           <td class="btn-blog">
-            <button class="edit" onclick="editBlog(${blog.id}, '${blog.title}', '${blog.slug}', '${blog.content}')">Edit</button>
+            <button class="edit" onclick="editBlog(${blog.id}, '${blog.title}', '${blog.slug}', '${blog.content}', '${blog.image}')">Edit</button>
             <button class="delete" onclick="deleteBlog(${blog.id})">Delete</button>
           </td>
         </tr>`;
@@ -277,13 +277,14 @@ if (storyForm) {
     const title = document.getElementById("title").value;
     const slug = document.getElementById("slug").value;
     const content = document.getElementById("content").value;
-    const image = document.getElementById("image-upload").files[0];
+    const image = document.getElementById("image").files[0];
 
     const formData = new FormData();
     formData.append("title", title);
     formData.append("slug", slug);
     formData.append("content", content);
     formData.append("image", image);
+    formData.append("author_id", localStorage.getItem("user_id")); // Assuming user_id is stored in localStorage
 
     try {
       const response = await fetch(`${API_BASE_URL}/blog`, {
@@ -310,10 +311,11 @@ if (storyForm) {
 }
 
 // Edit blog post
-function editBlog(id, title, slug, content) {
+function editBlog(id, title, slug, content, image) {
   document.getElementById("title").value = title;
   document.getElementById("slug").value = slug;
   document.getElementById("content").value = content;
+  document.getElementById("image").value = image;
   document.getElementById("submit-story").innerText = "Update Story";
 
   // Change submit button behavior
@@ -323,11 +325,13 @@ function editBlog(id, title, slug, content) {
     const updatedTitle = document.getElementById("title").value;
     const updatedSlug = document.getElementById("slug").value;
     const updatedContent = document.getElementById("content").value;
+    const updatedImage = document.getElementById("image").files[0];
 
     const updatedBlog = {
       title: updatedTitle,
-      title: updatedSlug,
+      slug: updatedSlug,
       content: updatedContent,
+      image: updatedImage,
     };
 
     try {
