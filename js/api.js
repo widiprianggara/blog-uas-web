@@ -93,7 +93,6 @@ if (logoutButton) {
 }
 
 // CRUD for Blog Posts
-
 // Function to fetch and display blogs
 async function getBlogs() {
   try {
