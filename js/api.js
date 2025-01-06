@@ -225,3 +225,150 @@ async function deleteBlog(blogId) {
     }
   }
 }
+
+// CRUD for Blog Posts
+
+// Fetch blog posts and display them in a table
+async function getBlogs() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/blog`);
+    const blogs = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Error fetching blogs: ${response.status}`);
+    }
+
+    let table = `
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Slug</th>
+        <th>Content</th>
+        <th>Action</th>
+      </tr>`;
+
+    blogs.forEach((blog) => {
+      table += `
+        <tr>
+          <td>${blog.id}</td>
+          <td>${blog.title}</td>
+          <td>${blog.slug}</td>
+          <td>${blog.content}</td>
+          <td class="btn-blog">
+            <button class="edit" onclick="editBlog(${blog.id}, '${blog.title}', '${blog.content}')">Edit</button>
+            <button class="delete" onclick="deleteBlog(${blog.id})">Delete</button>
+          </td>
+        </tr>`;
+    });
+
+    document.getElementById("BlogList").innerHTML = table;
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    alert(`Error: ${error.message}`);
+  }
+}
+
+// Create a new blog post
+const storyForm = document.getElementById("story-form");
+if (storyForm) {
+  storyForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("story-content").value;
+    const image = document.getElementById("image-upload").files[0];
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("image", image);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/blog`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Blog created successfully!");
+        getBlogs();
+        storyForm.reset();
+      } else {
+        alert(data.message || "Failed to create blog");
+      }
+    } catch (error) {
+      console.error("Error creating blog:", error);
+      alert("Error creating blog. Please try again.");
+    }
+  });
+}
+
+// Edit blog post
+function editBlog(id, title, content) {
+  document.getElementById("title").value = title;
+  document.getElementById("story-content").value = content;
+  document.getElementById("submit-story").innerText = "Update Story";
+
+  // Change submit button behavior
+  storyForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const updatedTitle = document.getElementById("title").value;
+    const updatedContent = document.getElementById("story-content").value;
+
+    const updatedBlog = {
+      title: updatedTitle,
+      content: updatedContent,
+    };
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/blog/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(updatedBlog),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Blog updated successfully!");
+        getBlogs();
+        storyForm.reset();
+      } else {
+        alert(data.message || "Failed to update blog");
+      }
+    } catch (error) {
+      console.error("Error updating blog:", error);
+      alert("Error updating blog. Please try again.");
+    }
+  });
+}
+
+// Delete blog post
+async function deleteBlog(id) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/blog/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      alert("Blog deleted successfully!");
+      getBlogs();
+    } else {
+      alert(data.message || "Failed to delete blog");
+    }
+  } catch (error) {
+    console.error("Error deleting blog:", error);
+    alert("Error deleting blog. Please try again.");
+  }
+}
