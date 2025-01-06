@@ -93,7 +93,7 @@ if (logoutButton) {
 
 // CRUD for Blog Posts
 
-// Fetch blog posts and display them in a table
+// Function to fetch and display blogs
 async function getBlogs() {
   try {
     const response = await fetch(`${API_BASE_URL}/blog`);
@@ -103,17 +103,11 @@ async function getBlogs() {
       throw new Error(`Error fetching blogs: ${response.status}`);
     }
 
-    if (blogs.length === 0) {
-      document.getElementById("BlogList").innerHTML = "<tr><td colspan='6'>No blogs available</td></tr>";
-      return;
-    }
-
     let table = `
       <tr>
         <th>ID</th>
         <th>Image</th>
         <th>Title</th>
-        <th>Slug</th>
         <th>Content</th>
         <th>Action</th>
       </tr>`;
@@ -124,10 +118,9 @@ async function getBlogs() {
           <td>${blog.id}</td>
           <td><img src="${blog.image}" alt="Blog Image" style="width: 50px; height: auto;"></td>
           <td>${blog.title}</td>
-          <td>${blog.slug}</td>
           <td>${blog.content}</td>
           <td class="btn-blog">
-            <button class="edit" onclick="editBlog(${blog.id}, '${blog.title}', '${blog.slug}', '${blog.content}', '${blog.image}')">Edit</button>
+            <button class="edit" onclick="editBlog(${blog.id}, '${blog.image}', '${blog.title}', '${blog.content}')">Edit</button>
             <button class="delete" onclick="deleteBlog(${blog.id})">Delete</button>
           </td>
         </tr>`;
@@ -149,18 +142,16 @@ if (storyForm) {
     e.preventDefault();
 
     const title = document.getElementById("title").value;
-    const slug = document.getElementById("slug").value;
     const content = document.getElementById("content").value;
     const image = document.getElementById("image").files[0]; // Get the selected image file
 
-    if (!title || !slug || !content) {
+    if (!title || !content) {
       alert("All fields are required!");
       return;
     }
 
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("slug", slug);
     formData.append("content", content);
     if (image) {
       formData.append("image", image); // Append the image file to the form data
@@ -186,6 +177,7 @@ if (storyForm) {
         isEditing = false; // Reset the editing flag
         storyForm.dataset.blogId = ""; // Clear dataset
       } else {
+        console.error("Failed to process blog:", data);
         alert(data.message || "Failed to process blog");
       }
     } catch (error) {
@@ -195,37 +187,30 @@ if (storyForm) {
   });
 }
 
-// Fungsi untuk menampilkan pratinjau gambar yang diupload
+// Function to preview uploaded image
 function previewImage(event) {
-  const file = event.target.files[0];  // Mengambil file dari input file
-  const reader = new FileReader();  // Membaca file
+  const file = event.target.files[0];  // Get the file from the input
+  const reader = new FileReader();  // Read the file
 
   reader.onload = function () {
-    const preview = document.getElementById("image-preview");  // Mengambil elemen pratinjau
-    preview.src = reader.result;  // Set src gambar dengan hasil pembacaan file
-    preview.style.display = "block";  // Menampilkan gambar pratinjau
+    const preview = document.getElementById("image-preview");  // Get the preview element
+    preview.src = reader.result;  // Set the src of the image to the result of the file reader
+    preview.style.display = "block";  // Display the preview image
   };
 
   if (file) {
-    reader.readAsDataURL(file);  // Membaca file yang diupload sebagai data URL
+    reader.readAsDataURL(file);  // Read the uploaded file as a data URL
   }
 }
 
-// Edit blog post
-function editBlog(id, title, slug, content, image) {
-  document.getElementById("title").value = title;
-  document.getElementById("slug").value = slug;
-  document.getElementById("content").value = content;
-  document.getElementById("submit-story").innerText = "Update Story";
-
-  // Menampilkan pratinjau gambar
-  const previewImage = document.getElementById("image-preview");
-  previewImage.src = image;  // Menetapkan gambar dari URL yang ada
-  previewImage.style.display = "block";  // Menampilkan pratinjau gambar
-
-  // Set editing flag dan store blog id
+// Function to edit a blog post
+function editBlog(id, image, title, content) {
   isEditing = true;
   storyForm.dataset.blogId = id;
+  document.getElementById("title").value = title;
+  document.getElementById("content").value = content;
+  document.getElementById("image-preview").src = image;
+  document.getElementById("image-preview").style.display = "block";
 }
 
 // Delete blog post
