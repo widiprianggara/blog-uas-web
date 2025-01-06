@@ -255,7 +255,7 @@ async function getBlogs() {
           <td>${blog.slug}</td>
           <td>${blog.content}</td>
           <td class="btn-blog">
-            <button class="edit" onclick="editBlog(${blog.id}, '${blog.title}', '${blog.content}')">Edit</button>
+            <button class="edit" onclick="editBlog(${blog.id}, '${blog.title}', '${blog.slug}', '${blog.content}')">Edit</button>
             <button class="delete" onclick="deleteBlog(${blog.id})">Delete</button>
           </td>
         </tr>`;
@@ -275,11 +275,13 @@ if (storyForm) {
     e.preventDefault();
 
     const title = document.getElementById("title").value;
-    const content = document.getElementById("story-content").value;
+    const slug = document.getElementById("slug").value;
+    const content = document.getElementById("content").value;
     const image = document.getElementById("image-upload").files[0];
 
     const formData = new FormData();
     formData.append("title", title);
+    formData.append("slug", slug);
     formData.append("content", content);
     formData.append("image", image);
 
@@ -308,9 +310,10 @@ if (storyForm) {
 }
 
 // Edit blog post
-function editBlog(id, title, content) {
+function editBlog(id, title, slug, content) {
   document.getElementById("title").value = title;
-  document.getElementById("story-content").value = content;
+  document.getElementById("slug").value = slug;
+  document.getElementById("content").value = content;
   document.getElementById("submit-story").innerText = "Update Story";
 
   // Change submit button behavior
@@ -318,10 +321,12 @@ function editBlog(id, title, content) {
     e.preventDefault();
 
     const updatedTitle = document.getElementById("title").value;
-    const updatedContent = document.getElementById("story-content").value;
+    const updatedSlug = document.getElementById("slug").value;
+    const updatedContent = document.getElementById("content").value;
 
     const updatedBlog = {
       title: updatedTitle,
+      title: updatedSlug,
       content: updatedContent,
     };
 

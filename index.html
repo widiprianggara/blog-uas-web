@@ -134,7 +134,7 @@
 
       <!-- Membuat Stroies Baru -->
 
-      <div class="writeStories-mainContainer" id="write-stories">
+      <div class="writeStories-mainContainer" id="story-form">
         <div class="write-stories-title">
           <h2>Write Your Awesome Stories Here</h2>
         </div>
@@ -172,17 +172,24 @@
               placeholder="Write Your Story Headline"
               class="story-title"
             />
+            <input
+              type="text"
+              name="slug"
+              id="slug"
+              placeholder="Slug"
+              class="story-title"
+            />
         
             <div class="input-box">
               <textarea
-                name="stories"
-                id="story-content"
+                name="content"
+                id="content"
                 class="story-content"
                 placeholder="Write Your Stories Here"
               ></textarea>
             </div>
         
-            <button type="submit" class="submit-stories">Send Your Stories</button>
+            <button type="submit" class="submit-stories" id="submit">Send Your Stories</button>
           </form>
         </div>        
       </div>
