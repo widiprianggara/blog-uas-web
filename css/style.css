@@ -1,294 +1,289 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 /* CSS Refactor */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #E9E5DD;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e9e5dd;
 }
 
-body{
-    overflow-x: hidden;
+body {
+  overflow-x: hidden;
 }
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 /* CSS Form Regsiter & Login */
 
 .forminput {
-    background-color: #fafafa;
+  background-color: #fafafa;
 }
 
 .container {
-    position: relative;
-    max-width: 430px;
-    width: 100%;
-    background: #fafafa;
-    border-radius: 10px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin: 0 20px;
+  position: relative;
+  max-width: 430px;
+  width: 100%;
+  background: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 0 20px;
 }
 
 .container .forms {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    height: 100%;
-    width: 200%;
-    transition: height 0.2s ease;
-    background-color: #fafafa;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 100%;
+  width: 200%;
+  transition: height 0.2s ease;
+  background-color: #fafafa;
 }
 
-
 .container .form {
-    width: 50%;
-    padding: 30px;
-    background-color: #fafafa;
-    transition: margin-left 0.18s ease;
+  width: 50%;
+  padding: 30px;
+  background-color: #fafafa;
+  transition: margin-left 0.18s ease;
 }
 
 .container.active .login {
-    margin-left: -50%;
-    opacity: 0;
-    transition: margin-left 0.18s ease, opacity 0.15s ease;
+  margin-left: -50%;
+  opacity: 0;
+  transition: margin-left 0.18s ease, opacity 0.15s ease;
 }
 
 .container .signup {
-    opacity: 0;
-    transition: opacity 0.09s ease;
+  opacity: 0;
+  transition: opacity 0.09s ease;
 }
 
 .container.active .signup {
-    opacity: 1;
-    transition: opacity 0.2s ease;
+  opacity: 1;
+  transition: opacity 0.2s ease;
 }
 
 .container.active .forms {
-    height: 600px;
+  height: 600px;
 }
 
 .container .form .title {
-    position: relative;
-    font-size: 27px;
-    font-weight: 600;
+  position: relative;
+  font-size: 27px;
+  font-weight: 600;
 }
 
 .form .title::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 3px;
-    width: 30px;
-    background-color: #E9E5DD;
-    border-radius: 25px;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  background-color: #e9e5dd;
+  border-radius: 25px;
 }
 
 .form .input-field {
-    position: relative;
-    height: 50px;
-    width: 100%;
-    margin-top: 30px;
+  position: relative;
+  height: 50px;
+  width: 100%;
+  margin-top: 30px;
 }
 
 .input-field input {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    padding: 0 35px;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    border-bottom: 2px solid #ccc;
-    border-top: 2px solid transparent;
-    transition: all 0.2s ease;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: 0 35px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  border-bottom: 2px solid #ccc;
+  border-top: 2px solid transparent;
+  transition: all 0.2s ease;
 }
 
 .input-field input:hover {
-    transform: translateY(-3px);
+  transform: translateY(-3px);
 }
 
 .input-field input:is(:focus, :valid) {
-    border-bottom-color: #F8DDA4;
+  border-bottom-color: #f8dda4;
 }
 
 .input-field i {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    font-size: 23px;
-    transition: all 0.2s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 23px;
+  transition: all 0.2s ease;
 }
 
-.input-field input:is(:focus, :valid)~i {
-    color: #F8DDA4;
+.input-field input:is(:focus, :valid) ~ i {
+  color: #f8dda4;
 }
 
 .input-field i.icon {
-    left: 0;
+  left: 0;
 }
 
 .input-field i.showHidePw {
-    right: 0;
-    cursor: pointer;
-    padding: 10px;
+  right: 0;
+  cursor: pointer;
+  padding: 10px;
 }
 
 .form .checkbox-text {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 .checkbox-text .checkbox-content {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .form .text {
-    color: #333;
-    font-size: 14px;
+  color: #333;
+  font-size: 14px;
 }
 
 .form a.text {
-    color: #F8DDA4;
-    text-decoration: none;
+  color: #f8dda4;
+  text-decoration: none;
 }
 
 .form a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .form .button {
-    margin-top: 35px;;
+  margin-top: 35px;
 }
 
 .form .button input {
-    border: none;
-    color: #414141;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    border-radius: 6px;
-    background-color: #F8DDA4;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  border: none;
+  color: #414141;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  background-color: #f8dda4;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .form .button input:hover {
-    background-color: #F8DDA4;
-    transform: translateY(-3px);
-    cursor: pointer;
+  background-color: #f8dda4;
+  transform: translateY(-3px);
+  cursor: pointer;
 }
 
 .form .login-signup {
-    margin-top: 30px;
-    text-align: center;
+  margin-top: 30px;
+  text-align: center;
 }
 
 .endtextlogin {
-    padding-top: 15px;
-    align-items: center;
-    text-decoration: none;
-    display: flex;
-    padding-left: 45px;
+  padding-top: 15px;
+  align-items: center;
+  text-decoration: none;
+  display: flex;
+  padding-left: 45px;
 }
 
 /* CSS Khsusus Form Login */
 .container .formslogin {
-    display: flex;
-    align-items: center;
-    height: 500px;
-    width: 200%;
-    transition: height 0.2s ease;;
+  display: flex;
+  align-items: center;
+  height: 500px;
+  width: 200%;
+  transition: height 0.2s ease;
 }
 
-
 .endtextlogin {
-    text-decoration: none;
-    padding-right: 20px;
-    align-items: center;
+  text-decoration: none;
+  padding-right: 20px;
+  align-items: center;
 }
 
 /* CSS responsive */
 @media (max-width: 768px) {
-    .container {
-        max-width: 90%;
-    }
+  .container {
+    max-width: 90%;
+  }
 
-    .container .form .title {
-        font-size: 1.2rem;
-    }
+  .container .form .title {
+    font-size: 1.2rem;
+  }
 
-    .input-field input {
-        font-size: 14px;
-    }
+  .input-field input {
+    font-size: 14px;
+  }
 
-    .form .button input {
-        font-size: 15px;
-    }
+  .form .button input {
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding: 15px;
-    }
+  .container {
+    padding: 15px;
+  }
 
-    .container .form .title {
-        font-size: 1rem;
-    }
+  .container .form .title {
+    font-size: 1rem;
+  }
 
-    .input-field input {
-        font-size: 12px;
-    }
+  .input-field input {
+    font-size: 12px;
+  }
 
-    .form .button input {
-        font-size: 13px;
-    }
+  .form .button input {
+    font-size: 13px;
+  }
 }
 
 /* all style  */
 .endtextlogin {
-    text-align: center;
-    font-size: 14px;
-    margin-top: 1rem;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
+.endtextlogin a {
+  display: inline;
+  color: #0077b6;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* responsive form */
+@media (max-width: 768px) {
+  .endtextlogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.5rem;
   }
 
   .endtextlogin a {
-    display: inline;
-    color : #0077b6;
-    font-weight: bold;
-    text-decoration: none;
+    margin-top: 0.5rem;
+    display: block;
   }
-
-  /* responsive form */
-  @media (max-width: 768px) {
-    .endtextlogin {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 1.5rem;
-    }
-
-    .endtextlogin a {
-      margin-top: 0.5rem;
-      display: block;
-    }
-  }
-
-
+}
