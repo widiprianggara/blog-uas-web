@@ -1,35 +1,22 @@
 // script untuk responsive navbar
-
 document.addEventListener("DOMContentLoaded", () => {
   const menuIcon = document.getElementById("menu-icon");
   const menuList = document.getElementById("menu-list");
-
-  menuIcon.addEventListener("click", () => {
-      menuList.classList.toggle("hidden");
-  });
-});
-
-// script untuk responsive navbar
-
-document.addEventListener("DOMContentLoaded", () => {
-  const menuIcon = document.getElementById("menu-icon");
-  const menuList = document.getElementById("menu-list");
-
-  menuIcon.addEventListener("click", () => {
-      menuList.classList.toggle("hidden");
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
   const userIcon = document.getElementById("user-icon");
   const dropdownMenu = document.getElementById("dropdown-menu");
 
-  userIcon.addEventListener("click", function () {
+  // Toggle menu visibility
+  menuIcon.addEventListener("click", () => {
+    menuList.classList.toggle("hidden");
+  });
+
+  // Toggle user dropdown visibility
+  userIcon.addEventListener("click", () => {
     dropdownMenu.classList.toggle("active");
   });
 
-  // Menutup dropdown jika pengguna mengklik di luar
-  document.addEventListener("click", function (event) {
+  // Close dropdown if user clicks outside
+  document.addEventListener("click", (event) => {
     if (!userIcon.contains(event.target)) {
       dropdownMenu.classList.remove("active");
     }

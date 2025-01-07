@@ -46,7 +46,7 @@ html {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    height: 500px;
+    height: 100%;
     width: 200%;
     transition: height 0.2s ease;
     background-color: #fafafa;
@@ -228,38 +228,67 @@ html {
 /* CSS responsive */
 @media (max-width: 768px) {
     .container {
-        max-width: 90%; /* Reduce container width */
+        max-width: 90%;
     }
 
     .container .form .title {
-        font-size: 1.2rem; /* Adjust title size */
+        font-size: 1.2rem;
     }
 
     .input-field input {
-        font-size: 14px; /* Adjust input font size */
+        font-size: 14px;
     }
 
     .form .button input {
-        font-size: 15px; /* Adjust button font size */
+        font-size: 15px;
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 15px; /* Reduce padding */
+        padding: 15px;
     }
 
     .container .form .title {
-        font-size: 1rem; /* Further reduce title size */
+        font-size: 1rem;
     }
 
     .input-field input {
-        font-size: 12px; /* Smaller input font size */
+        font-size: 12px;
     }
 
     .form .button input {
-        font-size: 13px; /* Smaller button font size */
+        font-size: 13px;
     }
 }
+
+/* all style  */
+.endtextlogin {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 1rem;
+  }
+
+  .endtextlogin a {
+    display: inline;
+    color : #0077b6;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  /* responsive form */
+  @media (max-width: 768px) {
+    .endtextlogin {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .endtextlogin a {
+      margin-top: 0.5rem;
+      display: block;
+    }
+  }
 
 

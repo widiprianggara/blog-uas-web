@@ -31,14 +31,11 @@
         <li>
           <a href="#write-stories">Write Stories</a>
         </li>
-      </ul>
-
-      <ul>
         <li>
           <div id="user-icon" class="user-icon">
             <i class="uil uil-user"></i>
             <div id="dropdown-menu" class="dropdown hidden">
-              <button id="logout-btn-btn">Logout</button>
+              <button id="logout-btn">Logout</button>
             </div>
           </div>
         </li>
@@ -74,54 +71,7 @@
     </header>
 
     <main>
-      <div class="main-title" id="latest-stories">
-        <h2>Latest Stories</h2>
-      </div>
-
-      <!-- Contoh Stories Yang Sudah Diinputkan Melalui Section Membuat Stori Bentuk Tabel-->
-      <div class="table-container">
-        <table id="data-table" class="table">
-          <thead>
-            <tr class="table-header">
-              <th>Image</th>
-              <th>Title</th>
-              <th>Content</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr onclick="showPopup(this)">
-              <td>
-                <img src="https://via.placeholder.com/80" alt="Gambar 1" />
-              </td>
-              <td>How to Conduct User Research</td>
-              <td>
-                iPusnas is a library application owned by the Indonesian
-                government. iPusnas provides various types and genres of books,
-                which can be read for free by readers.
-              </td>
-
-              <td class="action-buttons">
-                <button class="edit">Edit</button>
-                <button class="delete">Delete</button>
-              </td>
-            </tr>
-            <tr onclick="showPopup(this)">
-              <td>
-                <img src="https://via.placeholder.com/80" alt="Gambar 2" />
-              </td>
-              <td>How to Conduct Usability Testing</td>
-              <td></td>
-              <td class="action-buttons">
-                <button class="edit">Edit</button>
-                <button class="delete">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Membuat Stroies Baru -->
+      <!-- Create New Stories -->
 
       <div class="writeStories-mainContainer" id="write-stories">
         <div class="write-stories-title">
@@ -131,51 +81,72 @@
         <div class="write-stories-container">
           <div class="headline stories">
             <h3>Tell Another People Your Awesome Stories</h3>
-            <p>Always tell your stories inspire another people</p>
+            <p>Always tell your stories to inspire another people</p>
           </div>
 
-          <div class="upload-image-heading">
-            <h4>Add Image to Your Stories</h4>
-          </div>
+          <form
+            enctype="multipart/form-data"
+            class="story-form"
+            method="POST"
+            onsubmit="handleFormSubmit(event)"
+            id="story-form"
+            novalidate
+          >
+            <div class="upload-image-heading">
+              <p>Add an Image to Your Story</p>
+            </div>
 
-          <div class="upload-image">
-            <form
-              class="choose-file"
-              action="/upload"
-              method="post"
-              enctype="multipart/form-data"
-            >
+            <div class="upload-image">
               <input
                 type="file"
                 class="image-select"
-                id="image-upload"
+                id="image"
                 name="image"
                 accept="image/*"
+                onchange="previewImage(event)"
               />
+            </div>
 
-              <!-- <button class="btn-upload-image">Upload</button> -->
-            </form>
-          </div>
+            <div class="input-box-image">
+              <!-- for upload image -->
+              <img
+                id="image-preview"
+                src=""
+                alt="Preview Image"
+                style="display: none; width: 90px; height: auto"
+              />
+            </div>
 
-          <form action="#">
             <input
               type="text"
               name="title"
               id="title"
               placeholder="Write Your Story Headline"
+              class="story-title"
             />
 
             <div class="input-box">
               <textarea
-                name="stories"
-                class="stories"
-                placeholder="Write Your Stories Here"
+                name="content"
+                id="content"
+                class="story-content"
+                placeholder="Write Your Story Here"
               ></textarea>
             </div>
 
-            <button class="submit-stories">Send You Stories</button>
+            <button type="submit" class="submit-stories" id="submit-story">
+              Send Your Story
+            </button>
           </form>
         </div>
+      </div>
+
+      <div class="main-title" id="latest-stories">
+        <h1>Latest Stories</h1>
+      </div>
+
+      <div class="table-container">
+        <table id="BlogList" class="styled-table"></table>
       </div>
     </main>
 
