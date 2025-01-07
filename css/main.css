@@ -6,7 +6,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins';
 }
 
 body {
@@ -23,7 +23,6 @@ html {
 }
 
 /* Navbar*/
-
 .header{
     position: fixed;
 }
@@ -139,8 +138,9 @@ nav {
     }
 
     .dropdown.active {
-      display: block; /* Ditampilkan saat diaktifkan */
+      display: block;
     }
+
 
   /* Hero Section */
   .profile {
@@ -224,21 +224,21 @@ nav {
 /* css responsive for hero secton*/
 @media (max-width: 1024px) {
   .hero {
-    gap: 2rem; /* Adjust gap between profile and image */
+    gap: 2rem;
   }
 
   .profile {
     width: 90%;
-    max-width: 500px; /* Limit max-width for larger tablets */
+    max-width: 500px;
   }
 
   .borderimage {
-    width: 250px; /* Resize image container */
+    width: 250px;
     height: 250px;
   }
 
   .work {
-    width: 150px; /* Make button smaller */
+    width: 150px;
   }
 }
 
@@ -249,18 +249,18 @@ nav {
   }
 
   .profile {
-    width: 90%; /* Take full width on smaller screens */
-    height: auto; /* Allow height to adjust automatically */
-    text-align: center; /* Center text inside profile */
+    width: 90%;
+    height: auto;
+    text-align: center;
   }
 
   .borderimage {
-    width: 250px; /* Adjust image size */
+    width: 250px;
     height: 250px;
   }
 
   .work {
-    width: 100%; /* Make button full-width on small screens */
+    width: 100%;
   }
 
   .profesi {
@@ -268,7 +268,7 @@ nav {
   }
 
   .deskripsisaya {
-    font-size: 0.9rem; /* Slightly smaller font for mobile */
+    font-size: 0.9rem;
   }
 }
 
@@ -285,7 +285,7 @@ nav {
   }
 
   .borderimage {
-    width: 200px; /* Further adjust image size */
+    width: 200px;
     height: 200px;
   }
 
@@ -295,11 +295,11 @@ nav {
   }
 
   .profesi {
-    font-size: 1.3rem; /* Adjust font size for mobile */
+    font-size: 1.3rem;
   }
 
   .deskripsisaya {
-    font-size: 0.85rem; /* Make text smaller on mobile */
+    font-size: 0.85rem;
   }
 }
 
@@ -311,7 +311,7 @@ nav {
   text-align: center;
   width: 100%;
   max-width: 770px;
-  margin: 10px auto;
+  margin: 90px auto;
 }
 
 /* list blog text style */
@@ -489,8 +489,8 @@ btn-blog .delete .edit:hover {
   width: 100%;
   max-width: 770px;
   margin: 10px auto;
-  margin-top: 50px;
-  margin-bottom: 30px;
+  margin-top: -70px;
+  margin-bottom: 90px;
 }
 
 /* write stories container */
@@ -509,7 +509,7 @@ btn-blog .delete .edit:hover {
   font-weight: bold;
   color: #414141;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 }
 
 /* Write Stories Container Styling */
@@ -521,6 +521,7 @@ btn-blog .delete .edit:hover {
   box-sizing: border-box;
   background-color: #ffffff;
   border-radius: 10px;
+  margin-top: 40px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -564,8 +565,20 @@ textarea {
   flex-direction: row;
   max-width: 950px;
   box-sizing: border-box;
+  width: 100%;
 }
 
+.image-select {
+  margin-right: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #f8dda4;
+  color: #414141;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
 /* styling button upload image */
 .btn-upload-image {
@@ -604,22 +617,21 @@ textarea {
 /* responsive CSS upload image */
 @media (max-width: 768px) {
   .upload-image {
-    flex-direction: column; /* Tata letak vertikal */
-    align-items: stretch; /* Elemen memenuhi lebar penuh */
-    padding: 20px;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .image-select {
-    margin-bottom: 10px; /* Tambahkan jarak bawah */
+    margin-bottom: 10px;
     margin-right: 0;
   }
 
   .btn-upload-image {
-    width: 100%; /* Tombol memenuhi lebar penuh */
+    width: 100%;
   }
 }
 
-/* Responsif untuk layar sangat kecil */
+
 @media (max-width: 480px) {
   .upload-image {
     padding: 15px;
@@ -627,11 +639,11 @@ textarea {
   }
 
   .image-select {
-    font-size: 12px; /* Ukuran teks lebih kecil */
+    font-size: 12px;
   }
 
   .btn-upload-image {
-    font-size: 14px; /* Ukuran teks lebih kecil */
+    font-size: 14px;
     padding: 8px 15px;
   }
 }
@@ -700,12 +712,22 @@ form button {
 
 /* Styling for the table container */
 .table-container {
-  width: 80%;
+  max-width: 950px;
   margin: 50px auto;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+  max-width: 950px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
 }
 
 /* Table Styling */
@@ -714,6 +736,7 @@ form button {
   border-collapse: collapse;
   font-family: "Arial", sans-serif;
   background-color: #fff;
+  table-layout: auto;
 }
 
 .styled-table thead {
@@ -749,6 +772,41 @@ form button {
 
 .styled-table td {
   font-size: 14px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .table-container {
+    padding: 10px;
+  }
+
+  .styled-table th, .styled-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .styled-table th {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-container {
+    margin: 20px;
+  }
+
+  .styled-table th, .styled-table td {
+    font-size: 10px;
+    padding: 6px 8px;
+  }
+
+  .styled-table th {
+    font-size: 12px;
+  }
+
+  .styled-table {
+    font-size: 10px;
+  }
 }
 
 /* Responsive Design */
