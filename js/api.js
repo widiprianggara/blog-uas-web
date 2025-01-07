@@ -61,7 +61,9 @@ if (registerForm) {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-    const confirmPassword = document.getElementById("confirm-password").value.trim();
+    const confirmPassword = document
+      .getElementById("confirm-password")
+      .value.trim();
 
     if (!name || !email || !password || !confirmPassword) {
       alert("Semua field wajib diisi!");
@@ -77,7 +79,12 @@ if (registerForm) {
       const response = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, confirm_password: password }),
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          confirm_password: password,
+        }),
       });
 
       const data = await response.json();
@@ -118,14 +125,16 @@ async function getBlogs() {
   try {
     const response = await fetch(`${API_BASE_URL}/blog`, {
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
     const blogs = await response.json();
 
     if (!response.ok) {
-      throw new Error(blogs.message || `Error fetching blogs: ${response.status}`);
+      throw new Error(
+        blogs.message || `Error fetching blogs: ${response.status}`
+      );
     }
 
     let table = `
@@ -208,7 +217,7 @@ async function handleFormSubmit(event) {
       response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: formData,
       });
@@ -216,7 +225,7 @@ async function handleFormSubmit(event) {
       response = await fetch(`${API_BASE_URL}/blog/store`, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: formData,
       });
@@ -229,7 +238,9 @@ async function handleFormSubmit(event) {
     const result = await response.json();
 
     if (result) {
-      alert(blogId ? "Blog updated successfully!" : "Blog created successfully!");
+      alert(
+        blogId ? "Blog updated successfully!" : "Blog created successfully!"
+      );
       storyForm.reset();
       delete storyForm.dataset.blogId;
       document.getElementById("image-preview").style.display = "none";
@@ -272,7 +283,7 @@ async function deleteBlog(id) {
     const response = await fetch(`${API_BASE_URL}/blog/${id}`, {
       method: "DELETE",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 

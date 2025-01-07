@@ -82,14 +82,14 @@
             <h3>Tell Another People Your Awesome Stories</h3>
             <p>Always tell your stories to inspire another people</p>
           </div>
-        
+
           <form
             enctype="multipart/form-data"
-            class="story-form"  
+            class="story-form"
             method="POST"
             onsubmit="handleFormSubmit(event)"
             id="story-form"
-            novalidate 
+            novalidate
           >
             <div class="upload-image-heading">
               <h4>Add an Image to Your Story</h4>
@@ -102,13 +102,18 @@
                 id="image"
                 name="image"
                 accept="image/*"
-                onchange="previewImage(event)"  
+                onchange="previewImage(event)"
               />
             </div>
 
             <div class="input-box">
               <!-- Tempat untuk pratinjau gambar -->
-              <img id="image-preview" src="" alt="Preview Image" style="display:none; width: 100px; height: auto;" />
+              <img
+                id="image-preview"
+                src=""
+                alt="Preview Image"
+                style="display: none; width: 100px; height: auto"
+              />
             </div>
 
             <input
@@ -128,9 +133,11 @@
               ></textarea>
             </div>
 
-            <button type="submit" class="submit-stories" id="submit-story">Send Your Story</button>
+            <button type="submit" class="submit-stories" id="submit-story">
+              Send Your Story
+            </button>
           </form>
-        </div>        
+        </div>
       </div>
 
       <div class="main-title" id="latest-stories">
