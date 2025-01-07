@@ -95,7 +95,7 @@ if (registerForm) {
 }
 
 // Logout
-const logoutButton = document.getElementById("logout-btn-btn");
+const logoutButton = document.getElementById("logout-btn");
 if (logoutButton) {
   logoutButton.addEventListener("click", () => {
     localStorage.removeItem("token");
