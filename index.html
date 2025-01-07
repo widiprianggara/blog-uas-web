@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Meta information -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UX Stories</title>
+
+    <!-- Link ke file CSS utama -->
     <link rel="stylesheet" href="css/main.css" />
+
+    <!-- Ikon menggunakan library Unicons -->
     <link
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
+
+    <!-- Favicon untuk tab browser -->
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
   </head>
   <body>
+    <!-- Bagian navigasi -->
     <nav>
+      <!-- Logo profil -->
       <div class="profile-image" id="home">
         <img src="images/favicon.png" alt="" width="50px" height="50px" />
       </div>
 
+      <!-- Ikon menu untuk navigasi mobile -->
       <div id="menu-icon" class="menu-icon">
         <i class="uil uil-bars"></i>
       </div>
 
+      <!-- Daftar menu navigasi -->
       <ul id="menu-list" class="hidden">
         <li>
           <a href="#home">Home</a>
@@ -31,6 +42,7 @@
         <li>
           <a href="#latest-stories">Latest Stories</a>
         </li>
+        <!-- Menu user dengan dropdown -->
         <li>
           <div id="user-icon" class="user-icon">
             <i class="uil uil-user"></i>
@@ -42,10 +54,11 @@
       </ul>
     </nav>
 
-    <!-- Header & Hero Section -->
+    <!-- Bagian Header & Hero Section -->
     <header>
       <div class="hero">
         <div class="profile">
+          <!-- Pesan sambutan -->
           <h3 class="saya">Hi Writers, Welcome to UX Stories</h3>
           <h2 class="profesi">Share Your Stories That Inspires and Delight</h2>
           <p class="blog-description">
@@ -55,11 +68,13 @@
             others.
           </p>
 
+          <!-- Tombol untuk menulis cerita -->
           <div class="btn_hero">
             <button class="write-stories">Write Your Stories</button>
           </div>
         </div>
 
+        <!-- Gambar di bagian hero -->
         <div class="borderimage">
           <img
             src="images/hero-image.jpg"
@@ -71,8 +86,7 @@
     </header>
 
     <main>
-      <!-- Membuat Stroies Baru -->
-
+      <!-- Bagian untuk menulis cerita baru -->
       <div class="writeStories-mainContainer" id="write-stories">
         <div class="write-stories-title">
           <h2>Write Your Awesome Stories Here</h2>
@@ -80,22 +94,24 @@
 
         <div class="write-stories-container">
           <div class="headline stories">
+            <!-- Judul dan deskripsi bagian cerita -->
             <h3>Tell Another People Your Awesome Stories</h3>
             <p>Always tell your stories to inspire another people</p>
           </div>
-        
+
+          <!-- Formulir untuk menulis cerita -->
           <form
             enctype="multipart/form-data"
-            class="story-form"  
+            class="story-form"
             method="POST"
             onsubmit="handleFormSubmit(event)"
             id="story-form"
-            novalidate 
+            novalidate
           >
+            <!-- Bagian untuk upload gambar -->
             <div class="upload-image-heading">
               <h4>Add an Image to Your Story</h4>
             </div>
-
             <div class="upload-image">
               <input
                 type="file"
@@ -103,15 +119,21 @@
                 id="image"
                 name="image"
                 accept="image/*"
-                onchange="previewImage(event)"  
+                onchange="previewImage(event)"
               />
             </div>
 
             <div class="input-box">
-              <!-- Tempat untuk pratinjau gambar -->
-              <img id="image-preview" src="" alt="Preview Image" style="display:none; width: 100px; height: auto;" />
+              <!-- Tempat untuk preview gambar -->
+              <img
+                id="image-preview"
+                src=""
+                alt="Preview Image"
+                style="display: none; width: 100px; height: auto"
+              />
             </div>
 
+            <!-- Input untuk judul cerita -->
             <input
               type="text"
               name="title"
@@ -120,6 +142,7 @@
               class="story-title"
             />
 
+            <!-- Textarea untuk isi cerita -->
             <div class="input-box">
               <textarea
                 name="content"
@@ -129,21 +152,27 @@
               ></textarea>
             </div>
 
-            <button type="submit" class="submit-stories" id="submit-story">Send Your Story</button>
+            <!-- Tombol untuk submit cerita -->
+            <button type="submit" class="submit-stories" id="submit-story">
+              Send Your Story
+            </button>
           </form>
-        </div>        
+        </div>
       </div>
 
+      <!-- Bagian untuk menampilkan cerita terbaru -->
       <div class="main-title" id="latest-stories">
         <h2>Latest Stories</h2>
       </div>
 
+      <!-- Tabel untuk daftar cerita -->
       <div class="table-container">
         <table id="BlogList" class="styled-table"></table>
       </div>
     </main>
 
     <footer>
+      <!-- Bagian footer -->
       <div class="footer-content">
         <h3 class="header-footer">UX Stories</h3>
 
@@ -154,21 +183,24 @@
           others.
         </p>
 
+        <!-- Menu footer -->
         <div class="footer-menu">
           <ul class="f-menu">
             <li><a href="#home">Home</a></li>
-            <li><a href="#latest-stories">Lates Stories</a></li>
+            <li><a href="#latest-stories">Latest Stories</a></li>
             <li><a href="#write-stories">Write Stories</a></li>
           </ul>
         </div>
 
+        <!-- Copyright -->
         <div class="bottom-footer">
           <p class="btm_footer">&copy;UXStories.All Right Reserved</p>
         </div>
       </div>
     </footer>
   </body>
-  <!-- JS for responsive navbar -->
+  <!-- JavaScript untuk navbar responsive -->
   <script src="js/script.js"></script>
+  <!-- JavaScript untuk API -->
   <script src="js/api.js"></script>
 </html>

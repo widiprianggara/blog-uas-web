@@ -1,37 +1,46 @@
 // Base API URL
+// URL utama untuk mengakses API backend
 const API_BASE_URL = "https://primdev.alwaysdata.net/api";
 
 // Fungsi umum untuk mengambil token
+// Mengambil token dari LocalStorage untuk otentikasi pengguna
 const getToken = () => localStorage.getItem("token");
 
 // Redirect jika belum login
+// Event listener ini akan mengecek apakah pengguna telah login (memiliki token)
+// Jika tidak, pengguna akan diarahkan ke halaman login
 document.addEventListener("DOMContentLoaded", () => {
   const token = getToken();
 
+  // Jika belum login dan berada di halaman index.html, alihkan ke login.html
   if (!token && window.location.pathname.includes("index.html")) {
     alert("Please log in first!");
     window.location.href = "login.html";
   }
 
+  // Jika login dan berada di halaman index.html, panggil fungsi untuk menampilkan blog
   if (token && window.location.pathname.includes("index.html")) {
     getBlogs();
   }
 });
 
 // Login
+// Fungsi untuk menangani form login
 const loginForm = document.getElementById("login-form");
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Mencegah reload halaman setelah submit
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
+    // Validasi input
     if (!email || !password) {
       alert("Email dan password wajib diisi!");
       return;
     }
 
     try {
+      // Kirim request login ke API
       const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -40,6 +49,7 @@ if (loginForm) {
 
       const data = await response.json();
       if (response.ok) {
+        // Simpan token ke LocalStorage dan arahkan ke halaman index.html
         localStorage.setItem("token", data.token);
         alert("Login successful!");
         window.location.href = "index.html";
@@ -54,15 +64,19 @@ if (loginForm) {
 }
 
 // Register
+// Fungsi untuk menangani form registrasi
 const registerForm = document.getElementById("register-form");
 if (registerForm) {
   registerForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Mencegah reload halaman setelah submit
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-    const confirmPassword = document.getElementById("confirm-password").value.trim();
+    const confirmPassword = document
+      .getElementById("confirm-password")
+      .value.trim();
 
+    // Validasi input
     if (!name || !email || !password || !confirmPassword) {
       alert("Semua field wajib diisi!");
       return;
@@ -74,10 +88,16 @@ if (registerForm) {
     }
 
     try {
+      // Kirim request registrasi ke API
       const response = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, confirm_password: password }),
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          confirm_password: password,
+        }),
       });
 
       const data = await response.json();
@@ -95,17 +115,19 @@ if (registerForm) {
 }
 
 // Logout
+// Fungsi untuk menangani logout
 const logoutButton = document.getElementById("logout-btn-btn");
 if (logoutButton) {
   logoutButton.addEventListener("click", () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("token"); // Hapus token dari LocalStorage
     alert("Logged out successfully!");
-    window.location.href = "login.html";
+    window.location.href = "login.html"; // Redirect ke halaman login
   });
 }
 
 // CRUD for Blog Posts
 // Function to fetch and display blogs
+// Mengambil daftar blog dari API dan menampilkannya di tabel
 async function getBlogs() {
   const token = localStorage.getItem("token");
 
@@ -118,16 +140,19 @@ async function getBlogs() {
   try {
     const response = await fetch(`${API_BASE_URL}/blog`, {
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`, // Token untuk otentikasi
       },
     });
 
     const blogs = await response.json();
 
     if (!response.ok) {
-      throw new Error(blogs.message || `Error fetching blogs: ${response.status}`);
+      throw new Error(
+        blogs.message || `Error fetching blogs: ${response.status}`
+      );
     }
 
+    // Render blog list ke dalam tabel HTML
     let table = `
       <tr>
         <th>ID</th>
@@ -171,121 +196,5 @@ async function getBlogs() {
   } catch (error) {
     console.error("Error fetching blogs:", error);
     alert(`Error: ${error.message}`);
-  }
-}
-
-// Create or Update a blog post
-async function handleFormSubmit(event) {
-  event.preventDefault();
-
-  const storyForm = document.getElementById("story-form");
-  const blogId = storyForm.dataset.blogId || null;
-
-  const title = document.getElementById("title").value.trim();
-  const content = document.getElementById("content").value.trim();
-  const imageInput = document.getElementById("image");
-  const image = imageInput?.files?.[0] || null;
-  const token = localStorage.getItem("token");
-
-  if (!title || !content || (!image && !blogId)) {
-    alert("All fields must be filled in!");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("title", title);
-  formData.append("content", content);
-
-  if (image) {
-    formData.append("image", image);
-  }
-
-  try {
-    let response;
-
-    if (blogId) {
-      formData.append("_method", "PUT");
-      response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-        body: formData,
-      });
-    } else {
-      response = await fetch(`${API_BASE_URL}/blog/store`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-        body: formData,
-      });
-    }
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const result = await response.json();
-
-    if (result) {
-      alert(blogId ? "Blog updated successfully!" : "Blog created successfully!");
-      storyForm.reset();
-      delete storyForm.dataset.blogId;
-      document.getElementById("image-preview").style.display = "none";
-      getBlogs();
-    } else {
-      alert("Failed to process blog");
-    }
-  } catch (error) {
-    console.error("Error processing blog:", error);
-    alert("Error processing blog. Please try again.");
-  }
-}
-
-function editBlog(id, image, title, content) {
-  const storyForm = document.getElementById("story-form");
-  storyForm.dataset.blogId = id;
-
-  document.getElementById("title").value = title;
-  document.getElementById("content").value = content;
-
-  const imagePreview = document.getElementById("image-preview");
-  if (image) {
-    imagePreview.src = image;
-    imagePreview.style.display = "block";
-  } else {
-    imagePreview.style.display = "none";
-  }
-}
-
-async function deleteBlog(id) {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    alert("Unauthorized! Please log in.");
-    window.location.href = "login.html";
-    return;
-  }
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/blog/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-      },
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      alert("Blog deleted successfully!");
-      getBlogs();
-    } else {
-      alert(data.message || "Failed to delete blog");
-    }
-  } catch (error) {
-    console.error("Error deleting blog:", error);
-    alert("Error deleting blog. Please try again.");
   }
 }

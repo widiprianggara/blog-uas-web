@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Meta information -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+
+    <!-- Link ke file CSS -->
     <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Link ke library ikon Unicons -->
     <link
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
+
+    <!-- Favicon untuk tab browser -->
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
   </head>
   <body>
+    <!-- Container utama untuk halaman login -->
     <div class="container">
+      <!-- Wrapper untuk formulir -->
       <div class="forms">
+        <!-- Formulir login -->
         <div class="form login">
+          <!-- Judul formulir login -->
           <span class="title">Login to UX Stories</span>
+
+          <!-- Formulir login -->
           <form id="login-form">
+            <!-- Input untuk email -->
             <div class="input-field">
               <input
                 id="email"
@@ -24,8 +38,11 @@
                 placeholder="Enter Your Email"
                 required
               />
+              <!-- Ikon email -->
               <i class="uil uil-envelope icon"></i>
             </div>
+
+            <!-- Input untuk password -->
             <div class="input-field">
               <input
                 id="password"
@@ -34,12 +51,18 @@
                 placeholder="Enter Password"
                 required
               />
+              <!-- Ikon password -->
               <i class="uil uil-lock icon"></i>
+              <!-- Ikon untuk menampilkan/menyembunyikan password -->
               <i class="uil uil-eye-slash showHidePw"></i>
             </div>
+
+            <!-- Tombol untuk submit login -->
             <div class="input-field button">
               <input type="submit" value="Login" />
             </div>
+
+            <!-- Teks tambahan untuk mengarahkan ke halaman registrasi -->
             <p class="endtextlogin">
               Don't have an account? <a href="register.html">Register Now</a>
             </p>
@@ -47,6 +70,8 @@
         </div>
       </div>
     </div>
+
+    <!-- Link ke file JavaScript -->
     <script src="js/api.js"></script>
   </body>
 </html>
