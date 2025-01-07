@@ -107,7 +107,7 @@ if (logoutButton) {
 // CRUD for Blog Posts
 // Function to fetch and display blogs
 async function getBlogs() {
-  const token = localStorage.getItem("token"); // Mengambil token dari localStorage
+  const token = localStorage.getItem("token");
 
   if (!token) {
     alert("Unauthorized! Please log in.");
@@ -176,7 +176,7 @@ async function getBlogs() {
 
 // Create or Update a blog post
 async function handleFormSubmit(event) {
-  event.preventDefault(); // Hentikan perilaku default form
+  event.preventDefault();
 
   const storyForm = document.getElementById("story-form");
   const blogId = storyForm.dataset.blogId || null;
@@ -206,7 +206,7 @@ async function handleFormSubmit(event) {
     if (blogId) {
       formData.append("_method", "PUT");
       response = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
-        method: "POST", // Laravel menerima metode POST dengan _method untuk update
+        method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
         },
@@ -233,7 +233,7 @@ async function handleFormSubmit(event) {
       storyForm.reset();
       delete storyForm.dataset.blogId;
       document.getElementById("image-preview").style.display = "none";
-      getBlogs(); // Refresh daftar blog
+      getBlogs();
     } else {
       alert("Failed to process blog");
     }
@@ -243,7 +243,6 @@ async function handleFormSubmit(event) {
   }
 }
 
-// Populate form for editing
 function editBlog(id, image, title, content) {
   const storyForm = document.getElementById("story-form");
   storyForm.dataset.blogId = id;
@@ -260,7 +259,6 @@ function editBlog(id, image, title, content) {
   }
 }
 
-// Delete blog post
 async function deleteBlog(id) {
   const token = localStorage.getItem("token");
 
@@ -282,7 +280,7 @@ async function deleteBlog(id) {
 
     if (response.ok) {
       alert("Blog deleted successfully!");
-      getBlogs(); // Refresh daftar blog
+      getBlogs();
     } else {
       alert(data.message || "Failed to delete blog");
     }
@@ -291,8 +289,3 @@ async function deleteBlog(id) {
     alert("Error deleting blog. Please try again.");
   }
 }
-
-// Initial call to load blogs when the page loads
-document.addEventListener("DOMContentLoaded", () => {
-  getBlogs();
-});
