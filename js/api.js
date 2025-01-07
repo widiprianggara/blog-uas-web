@@ -1,12 +1,14 @@
 // Base API URL
 const API_BASE_URL = "https://primdev.alwaysdata.net/api";
 
+// Fungsi umum untuk mengambil token
+const getToken = () => localStorage.getItem("token");
 
 // Redirect jika belum login
 document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
-  if (window.location.pathname.includes("index.html") && !token) {
+  if (!token && window.location.pathname.includes("index.html")) {
     alert("Please log in first!");
     window.location.href = "login.html";
   }
@@ -21,8 +23,13 @@ const loginForm = document.getElementById("login-form");
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!email || !password) {
+      alert("Email dan password wajib diisi!");
+      return;
+    }
 
     try {
       const response = await fetch(`${API_BASE_URL}/login`, {
@@ -51,10 +58,15 @@ const registerForm = document.getElementById("register-form");
 if (registerForm) {
   registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirm-password").value;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirm-password").value.trim();
+
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Semua field wajib diisi!");
+      return;
+    }
 
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
@@ -95,12 +107,25 @@ if (logoutButton) {
 // CRUD for Blog Posts
 // Function to fetch and display blogs
 async function getBlogs() {
+  const token = localStorage.getItem("token"); // Mengambil token dari localStorage
+
+  if (!token) {
+    alert("Unauthorized! Please log in.");
+    window.location.href = "login.html";
+    return;
+  }
+
   try {
-    const response = await fetch(`${API_BASE_URL}/blog`);
+    const response = await fetch(`${API_BASE_URL}/blog`, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
     const blogs = await response.json();
 
     if (!response.ok) {
-      throw new Error(`Error fetching blogs: ${response.status}`);
+      throw new Error(blogs.message || `Error fetching blogs: ${response.status}`);
     }
 
     let table = `
@@ -116,12 +141,28 @@ async function getBlogs() {
       table += `
         <tr>
           <td>${blog.id}</td>
-          <td><img src="${blog.image}" alt="Blog Image" style="width: 50px; height: auto;"></td>
+          <td>
+            <img 
+              src="${blog.image}" 
+              alt="Blog Image" 
+              style="width: 50px; height: auto;" 
+            />
+          </td>
           <td>${blog.title}</td>
           <td>${blog.content}</td>
           <td class="btn-blog">
-            <button class="edit" onclick="editBlog(${blog.id}, '${blog.image}', '${blog.title}', '${blog.content}')">Edit</button>
-            <button class="delete" onclick="deleteBlog(${blog.id})">Delete</button>
+            <button 
+              class="edit" 
+              onclick="editBlog(${blog.id}, '${blog.image}', '${blog.title}', '${blog.content}')"
+            >
+              Edit
+            </button>
+            <button 
+              class="delete" 
+              onclick="deleteBlog(${blog.id})"
+            >
+              Delete
+            </button>
           </td>
         </tr>`;
     });
@@ -134,99 +175,123 @@ async function getBlogs() {
 }
 
 // Create or Update a blog post
-const storyForm = document.getElementById("story-form");
-let isEditing = false; // Flag to check if we're editing
+async function handleFormSubmit(event) {
+  event.preventDefault(); // Hentikan perilaku default form
 
-if (storyForm) {
-  storyForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  // Ambil elemen form dan dataset
+  const storyForm = document.getElementById("story-form");
+  const blogId = storyForm.dataset.blogId || null;
 
-    const title = document.getElementById("title").value;
-    const content = document.getElementById("content").value;
-    const image = document.getElementById("image").files[0]; // Get the selected image file
+  // Ambil nilai form
+  const title = document.getElementById("title").value.trim();
+  const content = document.getElementById("content").value.trim();
+  const imageInput = document.getElementById("image");
+  const image = imageInput?.files?.[0] || null;
+  const token = localStorage.getItem("token");
 
-    if (!title || !content) {
-      alert("All fields are required!");
-      return;
-    }
+  // Validasi input
+  if (!title || !content || (!image && !blogId)) {
+    alert("All fields must be filled in!");
+    return;
+  }
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    if (image) {
-      formData.append("image", image); // Append the image file to the form data
-    }
+  // Buat FormData
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("content", content);
 
-    const method = isEditing ? "PUT" : "POST";
-    const url = isEditing ? `${API_BASE_URL}/blog/${storyForm.dataset.blogId}` : `${API_BASE_URL}/blog`;
+  if (image) {
+    formData.append("image", image);
+  }
 
-    try {
-      const response = await fetch(url, {
-        method: method,
+  try {
+    let response;
+
+    // Tentukan apakah ini update atau store
+    if (blogId) {
+      formData.append("_method", "PUT");
+      response = await fetch(`https://primdev.alwaysdata.net/api/blog/${blogId}`, {
+        method: "POST", // Laravel menerima metode POST dengan _method untuk update
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Authorization": `Bearer ${token}`,
         },
         body: formData,
       });
-
-      const data = await response.json();
-      if (response.ok) {
-        alert(isEditing ? "Blog updated successfully!" : "Blog created successfully!");
-        getBlogs();
-        storyForm.reset();
-        isEditing = false; // Reset the editing flag
-        storyForm.dataset.blogId = ""; // Clear dataset
-      } else {
-        console.error("Failed to process blog:", data);
-        alert(data.message || "Failed to process blog");
-      }
-    } catch (error) {
-      console.error("Error processing blog:", error);
-      alert("Error processing blog. Please try again.");
+    } else {
+      response = await fetch("https://primdev.alwaysdata.net/api/blog/store", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+        body: formData,
+      });
     }
-  });
-}
 
-// Function to preview uploaded image
-function previewImage(event) {
-  const file = event.target.files[0];  // Get the file from the input
-  const reader = new FileReader();  // Read the file
+    // Periksa respons
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-  reader.onload = function () {
-    const preview = document.getElementById("image-preview");  // Get the preview element
-    preview.src = reader.result;  // Set the src of the image to the result of the file reader
-    preview.style.display = "block";  // Display the preview image
-  };
+    const result = await response.json();
 
-  if (file) {
-    reader.readAsDataURL(file);  // Read the uploaded file as a data URL
+    if (result) {
+      alert(blogId ? "Blog updated successfully!" : "Blog created successfully!");
+      storyForm.reset(); // Reset form setelah pengiriman
+      delete storyForm.dataset.blogId; // Hapus blogId dari dataset
+      document.getElementById("image-preview").style.display = "none"; // Sembunyikan pratinjau gambar
+      // Tambahkan logika untuk memuat ulang daftar blog jika diperlukan
+    } else {
+      alert("Failed to process blog");
+    }
+  } catch (error) {
+    console.error("Error processing blog:", error);
+    alert("Error processing blog. Please try again.");
   }
 }
 
-// Function to edit a blog post
+// Kode Anda untuk handleFormSubmit tetap sama
 function editBlog(id, image, title, content) {
-  isEditing = true;
+  // Tandai form sedang dalam mode edit
+  const storyForm = document.getElementById("story-form");
   storyForm.dataset.blogId = id;
+
+  // Isi nilai form dengan data blog yang akan diedit
   document.getElementById("title").value = title;
   document.getElementById("content").value = content;
-  document.getElementById("image-preview").src = image;
-  document.getElementById("image-preview").style.display = "block";
+
+  // Tampilkan pratinjau gambar jika ada
+  const imagePreview = document.getElementById("image-preview");
+  if (image) {
+    imagePreview.src = image;
+    imagePreview.style.display = "block";
+  } else {
+    imagePreview.style.display = "none";
+  }
 }
 
 // Delete blog post
 async function deleteBlog(id) {
+  const token = localStorage.getItem("token"); // Ambil token dari localStorage
+
+  if (!token) {
+    alert("Unauthorized! Please log in.");
+    window.location.href = "login.html";
+    return;
+  }
+
   try {
     const response = await fetch(`${API_BASE_URL}/blog/${id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Authorization": `Bearer ${token}`, // Gunakan template literal untuk memasukkan token
       },
     });
 
     const data = await response.json();
+
     if (response.ok) {
       alert("Blog deleted successfully!");
-      getBlogs();
+      getBlogs(); // Panggil ulang fungsi untuk memperbarui daftar blog
     } else {
       alert(data.message || "Failed to delete blog");
     }

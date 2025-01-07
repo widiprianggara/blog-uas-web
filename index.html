@@ -85,11 +85,12 @@
           </div>
         
           <form
-            action="/upload"
-            method="post"
             enctype="multipart/form-data"
-            class="story-form"
-            id="story-form" 
+            class="story-form"  
+            method="POST"
+            onsubmit="handleFormSubmit(event)"
+            id="story-form"
+            novalidate 
           >
             <div class="upload-image-heading">
               <h4>Add an Image to Your Story</h4>
